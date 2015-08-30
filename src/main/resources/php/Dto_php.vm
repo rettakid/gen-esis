@@ -1,0 +1,82 @@
+<?php
+
+class Dto {
+
+	public function printData(${H}app)	{
+		if (true)	{
+			${H}this->printXml(${H}app);
+		} else {
+			${H}this->printJson(${H}app);
+		}
+	}
+
+	public function printXml(${H}app)	{
+		${H}res = ${H}app->response();
+		${H}res['Content-Type'] = 'text/xml';
+
+		${H}reflect = new \ReflectionClass(${H}this);
+		${H}className = ${H}reflect->getShortName();
+		${H}classVars = ${H}reflect->getMethods();
+
+		echo "<${H}className>";
+		foreach (${H}classVars as ${H}classVar)	{
+			${H}methodName = ${H}classVar->getName();
+			if (substr(${H}methodName,0,3) == "get")	{
+				${H}displaName = substr(${H}methodName,3,strlen(${H}methodName) - 3);
+				${H}methodValue = ${H}this->${H}methodName();
+				if (is_array(${H}methodValue)) {
+					foreach (${H}methodValue as ${H}item) {
+						${H}item->printXml(${H}app);
+					}
+				}
+				elseif (${H}methodValue instanceof dto)	{
+					${H}methodValue->printXml(${H}app);
+				}  else 	{
+					echo "<${H}displaName>${H}methodValue</${H}displaName>";
+				}
+			}
+			
+		}
+		echo "</${H}className>";
+	}
+
+	public function bindJson(${H}app)	{
+		${H}reflect = new \ReflectionClass(${H}this);
+		${H}className = ${H}reflect->getShortName();
+		${H}classVars = ${H}reflect->getMethods();
+		foreach (${H}classVars as ${H}classVar)	{
+			${H}methodName = ${H}classVar->getName();
+			${H}displayName = ucwords(substr(${H}methodName,3,strlen(${H}methodName) - 3));
+			if (substr(${H}methodName,0,3) == "set")	{
+				echo ${H}displayName;
+				${H}data = ${H}app->request()->params(${H}displayName);
+				${H}this->${H}methodName(${H}data);
+				
+			}
+		}
+
+	}
+
+	public function printJson(${H}app)	{
+		${H}res = ${H}app->response();
+		${H}res['Content-Type'] = 'text/json';
+		${H}class_name = get_class(${H}this);
+		${H}class_vars = get_class_vars(${H}class_name);
+		echo "{";
+		foreach (${H}class_vars as ${H}name => ${H}value) {
+			${H}this_value = ${H}this->${H}name;
+			if (${H}this_value instanceof dto)	{
+				${H}sub_class_name = get_class(${H}this->${H}name);
+				echo "${H}sub_class_name : ";
+				${H}this->${H}name->print_json(${H}app);
+				echo ",";
+			} else 	{
+				echo "${H}name : '${H}this_value',";
+			}
+		}
+		echo "}";
+	}
+
+}
+
+?>

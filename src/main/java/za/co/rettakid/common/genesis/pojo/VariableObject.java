@@ -11,6 +11,7 @@ public class VariableObject {
     private VariableType type;
     private Integer length;
     private NullityTypeEnum nullity;
+    private Boolean isPk = false;
 
     public GeneratedName getName() {
         return name;
@@ -44,4 +45,11 @@ public class VariableObject {
         this.nullity = nullity;
     }
 
+    public Boolean getIsPk() {
+        return isPk;
+    }
+
+    public void setIsPk(Boolean isPk) {
+        this.isPk = isPk;
+    }
 }

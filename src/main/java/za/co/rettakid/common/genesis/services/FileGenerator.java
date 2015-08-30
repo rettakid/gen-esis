@@ -5,6 +5,7 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import za.co.rettakid.common.genesis.common.GenesisConstants;
+import za.co.rettakid.common.genesis.enums.TemplateEnum;
 import za.co.rettakid.common.genesis.pojo.ClassObject;
 import za.co.rettakid.common.genesis.pojo.VariableObject;
 
@@ -39,7 +40,7 @@ public class FileGenerator {
             }
             context.put("imports", imports);
             context.put("classObject", classObject);
-            generateFile(genDirList.get(GenesisConstants.CON_DIR_JAVA_DTO) + classObject.getName().getParcelCaseName() + "Dto.java", "java\\TemplateDto_java.vm", context);
+            generateFile(genDirList.get(GenesisConstants.CON_DIR_JAVA_DTO) + classObject.getName().getParcelCaseName() + "Dto.java", TemplateEnum.JAVA_DTO.getLocation(), context);
         }
     }
 
@@ -48,7 +49,7 @@ public class FileGenerator {
         for (ClassObject classObject : classObjects) {
             VelocityContext context = new VelocityContext();
             context.put("classObject", classObject);
-            generateFile(genDirList.get(GenesisConstants.CON_DIR_JAVA_CLIENT) + classObject.getName().getParcelCaseName() + "Client.java", "java\\TemplateClient_java.vm", context);
+            generateFile(genDirList.get(GenesisConstants.CON_DIR_JAVA_CLIENT) + classObject.getName().getParcelCaseName() + "Client.java", TemplateEnum.JAVA_CLIENT.getLocation(), context);
         }
     }
 
@@ -57,8 +58,54 @@ public class FileGenerator {
         for (ClassObject classObject : classObjects) {
             VelocityContext context = new VelocityContext();
             context.put("classObject", classObject);
-            generateFile(genDirList.get(GenesisConstants.CON_DIR_PHP_BINDINGS) + classObject.getName().getParcelCaseName() + "Binding.php", "php\\TemplateBinding_php.vm", context);
+            generateFile(genDirList.get(GenesisConstants.CON_DIR_PHP_BINDINGS) + classObject.getName().getParcelCaseName() + "Binding.php", TemplateEnum.PHP_BINDING.getLocation(), context);
         }
+    }
+
+    public void generatePhpCommon() throws Exception {
+        removePostFixFromDirMap(GenesisConstants.CON_DIR_PHP_COMMON);
+        VelocityContext context = new VelocityContext();
+        generateFile(genDirList.get(GenesisConstants.CON_DIR_PHP_COMMON) + "bootstrap.php", TemplateEnum.PHP_BOOTSTRAP.getLocation(), context);
+        generateFile(genDirList.get(GenesisConstants.CON_DIR_PHP_COMMON) + "config.php", TemplateEnum.PHP_CONFIG.getLocation(), context);
+    }
+
+    public void generatePhpBaseDto() throws Exception {
+        removePostFixFromDirMap(GenesisConstants.CON_DIR_PHP_DTO);
+        VelocityContext context = new VelocityContext();
+        generateFile(genDirList.get(GenesisConstants.CON_DIR_PHP_DTO) + "Dto.php", TemplateEnum.PHP_BASE_DTO.getLocation(), context);
+    }
+
+    public void generatePhpEntities() throws Exception {
+        removePostFixFromDirMap(GenesisConstants.CON_DIR_PHP_ENTITIES);
+        for (ClassObject classObject : classObjects) {
+            VelocityContext context = new VelocityContext();
+            context.put("classObject", classObject);
+            generateFile(genDirList.get(GenesisConstants.CON_DIR_PHP_ENTITIES) + classObject.getName().getParcelCaseName() + "Entity.php", TemplateEnum.PHP_ENTITY.getLocation(), context);
+        }
+    }
+
+    public void generatePhpDto() throws Exception {
+        removePostFixFromDirMap(GenesisConstants.CON_DIR_PHP_DTO);
+        for (ClassObject classObject : classObjects) {
+            VelocityContext context = new VelocityContext();
+            context.put("classObject", classObject);
+            generateFile(genDirList.get(GenesisConstants.CON_DIR_PHP_DTO) + classObject.getName().getParcelCaseName() + "Dto.php", TemplateEnum.PHP_DTO.getLocation(), context);
+        }
+    }
+
+    public void generatePhpControlers() throws Exception {
+        removePostFixFromDirMap(GenesisConstants.CON_DIR_PHP_CONTROLLERS);
+        for (ClassObject classObject : classObjects) {
+            VelocityContext context = new VelocityContext();
+            context.put("classObject", classObject);
+            generateFile(genDirList.get(GenesisConstants.CON_DIR_PHP_CONTROLLERS) + classObject.getName().getParcelCaseName() + "Controller.php", TemplateEnum.PHP_CONTROLLER.getLocation(), context);
+        }
+    }
+
+    public void generatePhpXML() throws Exception {
+        VelocityContext context = new VelocityContext();
+        context.put("classObjects", classObjects);
+        generateFile(genDirList.get(GenesisConstants.CON_DIR_PHP_ROOT) + "\\" + "xml.php", TemplateEnum.PHP_XML.getLocation(), context);
     }
 
     private void generateFile(String filePath, String templateName, VelocityContext context) throws Exception {
@@ -107,5 +154,6 @@ public class FileGenerator {
         genDir = genDir.replace(dir,"");
         genDirList.put(dir,genDir);
     }
+
 
 }

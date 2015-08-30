@@ -58,7 +58,7 @@ public class SchemaDecoder {
 
     private static List<VariableObject> getVariablesWithLength(String text)  {
         Matcher matcher = Pattern.compile(varPattern).matcher(text);
-        List<VariableObject> variableObjects = new ArrayList<>();
+        List<VariableObject> variableObjects = new ArrayList<VariableObject>();
         while (matcher.find()) {
             VariableObject variable = new VariableObject();
             variable.setName(new GeneratedName(matcher.group(1)));
@@ -97,6 +97,7 @@ public class SchemaDecoder {
             for (VariableObject variableObject : variableObjects) {
                 if (variableObject.getName().getOriginalName().equals(matcher.group(1))) {
                     primaryKey = variableObject;
+                    primaryKey.setIsPk(true);
                     variableObjects.remove(variableObject);
                     variableObjects.add(0, primaryKey);
                     break;

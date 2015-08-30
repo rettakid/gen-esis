@@ -2,12 +2,24 @@
 
 require_once (${H}PROJ_PRESENTATION_DTO_ROOT.'${classObject.name.parcelCaseName}Dto.php');
 
+function bind${classObject.name.parcelCaseName}Dto(${H}${classObject.name.camelCaseName}Dto)	{
+	if (${H}${classObject.name.camelCaseName}Dto != null)	{
+		${H}${classObject.name.camelCaseName}Entity = new ${classObject.name.parcelCaseName}Entity();
+#foreach(${variable} in ${classObject.variables})
+        ${H}${classObject.name.camelCaseName}Entity->set${variable.name.parcelCaseName}(${H}${classObject.name.camelCaseName}Dto->get${variable.name.parcelCaseName}());
+#end
+        return ${H}${classObject.name.camelCaseName}Entity;
+    }	else {
+        return null;
+    }
+}
+
 function bind${classObject.name.parcelCaseName}Entity(${H}${classObject.name.camelCaseName}Entity)	{
 	if (${H}${classObject.name.camelCaseName}Entity != null)	{
 		${H}${classObject.name.camelCaseName}Dto = new ${classObject.name.parcelCaseName}Dto();
-    #foreach(${variable} in ${classObject.variables})
-        ${H}${variable.name.camelCaseName}Dto->set${variable.name.parcelCaseName}Id(${H}${variable.name.camelCaseName}Entity->get${variable.name.parcelCaseName}Id();
-    #end
+#foreach(${variable} in ${classObject.variables})
+        ${H}${classObject.name.camelCaseName}Dto->set${variable.name.parcelCaseName}(${H}${classObject.name.camelCaseName}Entity->get${variable.name.parcelCaseName}());
+#end
         return ${H}${classObject.name.camelCaseName}Dto;
     }	else {
         return null;

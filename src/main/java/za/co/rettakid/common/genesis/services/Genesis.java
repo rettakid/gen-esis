@@ -14,8 +14,15 @@ public class Genesis {
         structureGenerator.generatorStructure(structureFilePath);
 
         FileGenerator fileGenerator = new FileGenerator(SchemaDecoder.decodeScheme(schemeFilePath),structureGenerator.getGenDirList());
+        fileGenerator.generateAndroidClients();
+        fileGenerator.generateAndroidDtos();
         fileGenerator.generatePhpBindings();
-        //fileGenerator.generateAndroidDtos();
+        fileGenerator.generatePhpCommon();
+        fileGenerator.generatePhpBaseDto();
+        fileGenerator.generatePhpDto();
+        fileGenerator.generatePhpControlers();
+        fileGenerator.generatePhpEntities();
+        fileGenerator.generatePhpXML();
 
     }
 

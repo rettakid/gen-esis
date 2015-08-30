@@ -181,7 +181,7 @@ public class Genesis {
 
     private static class SchemeObject {
         private String className;
-        private List<String> variables = new ArrayList<>();
+        private List<String> variables = new ArrayList<String>();
 
         public String getClassName() {
             return className;

@@ -1,0 +1,19 @@
+<?php
+
+use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\EntityManager;
+
+${H}isDevMode = true;
+${H}config = Setup::createAnnotationMetadataConfiguration(array(${H}PROJ_PERSISTANCE_ENTITY_ROOT), ${H}isDevMode);
+
+${H}conn = array(
+    'driver'   => 'pdo_mysql',
+    'host'     => '127.0.0.1',
+    'dbname'   => 'pacs',
+    'user'     => 'root',
+    'password' => ''
+);
+
+${H}entityManager = EntityManager::create(${H}conn, ${H}config);
+
+?>

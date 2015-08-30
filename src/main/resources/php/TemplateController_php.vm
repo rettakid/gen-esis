@@ -1,0 +1,44 @@
+<?php
+
+require_once (${H}PROJ_PRESENTATION_DTO_ROOT.'${classObject.name.parcelCaseName}Dto.php');
+require_once (${H}PROJ_PERSISTANCE_ENTITY_ROOT.'${classObject.name.parcelCaseName}Entity.php');
+require_once (${H}PROJ_COMMON_BINDING_ROOT.'${classObject.name.parcelCaseName}Binding.php');
+
+${H}app->get('/${classObject.name.lowerCaseName}s', function () use (${H}app) {
+	global ${H}entityManager;
+});
+
+${H}app->get('/${classObject.name.lowerCaseName}s/:id', function (${H}id) use (${H}app) {
+	global ${H}entityManager;
+	${H}${classObject.name.camelCaseName}Entity = new ${classObject.name.parcelCaseName}Entity();
+	${H}${classObject.name.camelCaseName}Entity = ${H}entityManager->find("${classObject.name.parcelCaseName}Entity", ${H}id);
+	${H}${classObject.name.camelCaseName}Dto = bind${classObject.name.parcelCaseName}Entity(${H}${classObject.name.camelCaseName}Entity);
+	${H}${classObject.name.camelCaseName}Dto->printData(${H}app);
+});
+
+${H}app->put('/${classObject.name.lowerCaseName}s/:id', function (${H}id) use (${H}app) {
+	global ${H}entityManager;
+	${H}${classObject.name.camelCaseName}Entity = ${H}entityManager->find("${classObject.name.parcelCaseName}Entity", ${H}id);
+	${H}entityManager->flush();
+	${H}${classObject.name.camelCaseName}Dto = bind${classObject.name.parcelCaseName}Entity(${H}${classObject.name.camelCaseName}Entity);
+	${H}${classObject.name.camelCaseName}Dto->printData(${H}app);
+});
+
+${H}app->post('/${classObject.name.lowerCaseName}s', function () use (${H}app) {
+	global ${H}entityManager;
+	${H}${classObject.name.camelCaseName}Dto = new ${classObject.name.parcelCaseName}Dto();
+	${H}${classObject.name.camelCaseName}Dto->bindJson(${H}app);
+	${H}entityManager->persist(${H}${classObject.name.camelCaseName}Entity);
+	${H}entityManager->flush();
+	${H}${classObject.name.camelCaseName}Dto = bind${classObject.name.parcelCaseName}Entity(${H}${classObject.name.camelCaseName}Entity);
+	${H}${classObject.name.camelCaseName}Dto->printData(${H}app);
+});
+
+${H}app->delete('/${classObject.name.lowerCaseName}s/:id', function (${H}id) use (${H}app) {
+	global ${H}entityManager;
+	${H}${classObject.name.camelCaseName}Entity = ${H}entityManager->find("${classObject.name.parcelCaseName}Entity", ${H}id);
+	${H}entityManager->remove(${H}${classObject.name.camelCaseName}Entity);
+	${H}entityManager->flush();
+});
+
+?>

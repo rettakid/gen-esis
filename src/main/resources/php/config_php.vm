@@ -1,0 +1,16 @@
+<?php
+
+${H}PROJ_FRAMEWORK_ROOT = 'framework/vendor/autoload.php';
+
+${H}PROJ_ROOT = 'protected/';
+
+${H}PROJ_COMMON_ROOT = ${H}PROJ_ROOT.'common/init/';
+${H}PROJ_COMMON_BINDING_ROOT = ${H}PROJ_ROOT.'common/binding/';
+${H}PROJ_PERSISTANCE_ROOT = ${H}PROJ_ROOT.'persistence/';
+${H}PROJ_PRESENTATION_ROOT = ${H}PROJ_ROOT.'presentation/';
+${H}PROJ_PRESENTATION_CONTROLLER_ROOT = ${H}PROJ_PRESENTATION_ROOT.'controllers/';
+${H}PROJ_PRESENTATION_DTO_ROOT = ${H}PROJ_PRESENTATION_ROOT.'dto/';
+${H}PROJ_PERSISTANCE_ENTITY_ROOT = ${H}PROJ_PERSISTANCE_ROOT.'entity/';
+
+
+?>

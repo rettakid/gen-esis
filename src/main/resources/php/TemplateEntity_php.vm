@@ -1,15 +1,40 @@
 <?php
 
-/** @Entity @Table(name="${classObject.name.lowerCaseOrgName}") **/
+/** @Entity @Table(name="pacs_${classObject.name.lowerCaseOrgName}") **/
 class ${classObject.name.parcelCaseName}Entity 	{
 
-	/** @Id @Column(name="session_id", type="string", nullable=false) @GeneratedValue **/
-	protected ${H}${classObject.name.camelCaseName}Id;
+#foreach(${variable} in ${classObject.variables})
+#if (${variable.isPk})
+    #set($id = '@Id ')
+    #set($autoGen = ' @GeneratedValue')
+#else
+    #set($id = '')
+    #set($autoGen = '')
+#end
+#if (${variable.nullity} == 'NOT_NULL')
+    #set($nullity = ' , nullable=false')
+#else
+    #set($nullity = '')
+#end
+#if (${variable.length})
+    #set($length = ' , length='+${variable.length})
+#else
+    #set($length = '')
+#end
+    /** ${id}@Column(name="${variable.name.lowerCaseOrgName}", type="string"${length}${nullity})${autoGen} **/
+    protected ${H}${variable.name.camelCaseName};
+#end
 
+#foreach(${variable} in ${classObject.variables})
+    public function get${variable.name.parcelCaseName}()	{
+		return ${H}this->${variable.name.camelCaseName};
+	}
 
-    #foreach(${variable} in ${classObject.variables})
-    /** @Id @Column(name="session_id", type="string", nullable=false) @GeneratedValue **/
-    protected ${H}${classObject.name.camelCaseName}Id;
-    #end
+	public function set${variable.name.parcelCaseName}(${H}${variable.name.camelCaseName})	{
+		${H}this->${variable.name.camelCaseName} = ${H}${variable.name.camelCaseName};
+	}
+
+#end
+
 }
 ?>

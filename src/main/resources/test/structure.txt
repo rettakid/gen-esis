@@ -2,8 +2,10 @@ root
 ├─ php_root
 │  └─ protected
 │     ├─ common
-│     │  └─ binding
-│     │     └─ php_bindings
+│     │  ├─ binding
+│     │  │  └─ php_bindings
+│     │  └─ init
+│     │     └─ php_common
 │     ├─ persistence
 │     │  └─ entity
 │     │     └─ php_entities

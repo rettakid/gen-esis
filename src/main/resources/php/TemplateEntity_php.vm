@@ -1,0 +1,15 @@
+<?php
+
+/** @Entity @Table(name="${classObject.name.lowerCaseOrgName}") **/
+class ${classObject.name.parcelCaseName}Entity 	{
+
+	/** @Id @Column(name="session_id", type="string", nullable=false) @GeneratedValue **/
+	protected ${H}${classObject.name.camelCaseName}Id;
+
+
+    #foreach(${variable} in ${classObject.variables})
+    /** @Id @Column(name="session_id", type="string", nullable=false) @GeneratedValue **/
+    protected ${H}${classObject.name.camelCaseName}Id;
+    #end
+}
+?>

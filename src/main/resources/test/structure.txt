@@ -1,0 +1,23 @@
+root
+├─ php_root
+│  └─ protected
+│     ├─ common
+│     │  └─ binding
+│     │     └─ php_bindings
+│     ├─ persistence
+│     │  └─ entity
+│     │     └─ php_entities
+│     ├─ presentation
+│     │  ├─ controllers
+│     │  │  └─ php_controllers
+│     │  └─ dto
+│     │     └─ php_dto
+│     └─ services
+└─ java_root
+   └─ za
+      └─ co
+         └─ rettakid
+            ├─ network
+            │  └─ java_client
+            └─ models
+               └─ java_dto

@@ -1,0 +1,37 @@
+<?php
+
+require_once ($PROJ_PRESENTATION_DTO_ROOT.'Dto.php');
+
+class ${classObject.name.parcelCaseName}Dto extends Dto 	{
+
+#foreach(${variable} in ${classObject.variables})
+    private ${H}${variable.name.camelCaseName};
+#end
+
+#foreach(${variable} in ${classObject.variables})
+    public function get${variable.name.parcelCaseName}()	{
+		return ${H}this->${variable.name.camelCaseName};
+	}
+
+	public function set${variable.name.parcelCaseName}(${H}${variable.name.camelCaseName})	{
+		${H}this->${variable.name.camelCaseName} = ${H}${variable.name.camelCaseName};
+	}
+
+#end
+
+}
+
+class ${classObject.name.parcelCaseName}List extends Dto {
+
+	private ${H}${classObject.name.camelCaseName}s = array();
+
+	public function get${classObject.name.parcelCaseName}s()	{
+		return ${H}this->${classObject.name.camelCaseName}s;
+	}
+
+	public function set${classObject.name.parcelCaseName}s(${H}${classObject.name.camelCaseName}s)	{
+		${H}this->${classObject.name.camelCaseName}s = ${H}${classObject.name.camelCaseName}s;
+	}
+
+}
+?>

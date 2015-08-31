@@ -7,6 +7,7 @@ public class GenesisConstants {
 
     public static final String CON_DIR_PHP_ROOT = "php_root";
     public static final String CON_DIR_PHP_BINDINGS = "php_bindings";
+    public static final String CON_DIR_PHP_COMMON = "php_common";
     public static final String CON_DIR_PHP_ENTITIES = "php_entities";
     public static final String CON_DIR_PHP_CONTROLLERS = "php_controllers";
     public static final String CON_DIR_PHP_DTO = "php_dto";

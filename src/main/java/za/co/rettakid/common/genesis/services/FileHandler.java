@@ -7,10 +7,13 @@ import java.io.*;
  */
 public class FileHandler {
 
+    private final static String CHARSET = "UTF-8";
+
     public static String getFileText(String filePath) {
         StringBuilder stringBuilder = new StringBuilder();
+        File file = new File(filePath);
         try {
-            BufferedReader br = new BufferedReader(new FileReader(filePath));
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file),CHARSET));
             String currentLine;
             while ((currentLine = br.readLine()) != null) {
                 stringBuilder.append(currentLine);

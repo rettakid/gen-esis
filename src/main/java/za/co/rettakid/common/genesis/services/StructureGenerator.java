@@ -29,6 +29,7 @@ public class StructureGenerator {
     public StructureGenerator() {
         genDirList.put(GenesisConstants.CON_DIR_PHP_ROOT,null);
         genDirList.put(GenesisConstants.CON_DIR_PHP_BINDINGS, null);
+        genDirList.put(GenesisConstants.CON_DIR_PHP_COMMON, null);
         genDirList.put(GenesisConstants.CON_DIR_PHP_CONTROLLERS, null);
         genDirList.put(GenesisConstants.CON_DIR_PHP_DTO, null);
         genDirList.put(GenesisConstants.CON_DIR_PHP_ENTITIES, null);

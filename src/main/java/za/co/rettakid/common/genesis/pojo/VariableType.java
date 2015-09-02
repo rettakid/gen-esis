@@ -7,12 +7,14 @@ import za.co.rettakid.common.genesis.enums.VariableTypeEnum;
  */
 public class VariableType {
     private VariableTypeEnum variableTypeEnum;
+    private String phpName;
     private String javaName;
     private String importPackage;
 
     public VariableType(VariableTypeEnum variableTypeEnum) {
         this.variableTypeEnum = variableTypeEnum;
         this.javaName = variableTypeEnum.getJavaName();
+        this.phpName = variableTypeEnum.getPhpName();
         this.importPackage = variableTypeEnum.getJavaImport();
     }
 
@@ -38,5 +40,13 @@ public class VariableType {
 
     public void setImportPackage(String importPackage) {
         this.importPackage = importPackage;
+    }
+
+    public String getPhpName() {
+        return phpName;
+    }
+
+    public void setPhpName(String phpName) {
+        this.phpName = phpName;
     }
 }

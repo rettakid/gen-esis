@@ -24,6 +24,7 @@ class Dto {
 			if (substr(${H}methodName,0,3) == "get")	{
 				${H}displaName = substr(${H}methodName,3,strlen(${H}methodName) - 3);
 				${H}methodValue = ${H}this->${H}methodName();
+				${H}displaName = strtolower(${H}displaName);
 				if (is_array(${H}methodValue)) {
 					foreach (${H}methodValue as ${H}item) {
 						${H}item->printXml(${H}app);

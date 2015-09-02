@@ -21,7 +21,7 @@ class ${classObject.name.parcelCaseName}Entity 	{
 #else
     #set($length = '')
 #end
-    /** ${id}@Column(name="${variable.name.lowerCaseOrgName}", type="string"${length}${nullity})${autoGen} **/
+    /** ${id}@Column(name="${variable.name.lowerCaseOrgName}", type="${variable.type.phpName}"${length}${nullity})${autoGen} **/
     protected ${H}${variable.name.camelCaseName};
 #end
 

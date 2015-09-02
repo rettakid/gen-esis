@@ -5,7 +5,7 @@ package za.co.rettakid.common.genesis.enums;
  */
 public enum TemplateEnum {
 
-    JAVA_BASE_CLIENT("java\\TemplateEntity_php.vm"),
+    JAVA_BASE_CLIENT("java\\BaseClient_java.vm"),
     JAVA_CLIENT("java\\TemplateClient_java.vm"),
     JAVA_DTO("java\\TemplateDto_java.vm"),
     PHP_BINDING("php\\TemplateBinding_php.vm"),

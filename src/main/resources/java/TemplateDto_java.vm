@@ -1,12 +1,17 @@
-package za.co.rettakid.dto
+package za.co.rettakid.dto;
+
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
 
 #foreach(${import} in ${imports})
 ${import}
 #end
 
+@Root
 public class ${classObject.name.parcelCaseName}Dto   {
 
 #foreach(${variable} in ${classObject.variables})
+    @Element(name = "${variable.name.lowerCaseName}")
     private ${variable.type.javaName} ${variable.name.camelCaseName};
 #end
 

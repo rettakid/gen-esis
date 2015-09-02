@@ -6,24 +6,28 @@ import org.springframework.web.client.RestTemplate;
 
 public class ${classObject.name.parcelCaseName}Client extends BaseClient   {
 
-    public ${classObject.name.parcelCaseName}Dto get${classObject.name.parcelCaseName}(${classObject.primaryKeyVar.type.javaName} ${classObject.primaryKeyVar.name.camelCaseName}))  {
-        String url = createUrl("/{id}",${classObject.primaryKeyVar.name.camelCaseName});
-        ${classObject.name.parcelCaseName}Dto ${classObject.name.camelCaseName} = getRestTemplate.getForObject(url, ${classObject.name.parcelCaseName}Dto.class);
+    public ${classObject.name.parcelCaseName}Client() {
+        super("/${classObject.name.lowerCaseName}s");
+    }
+
+    public ${classObject.name.parcelCaseName}Dto get${classObject.name.parcelCaseName}s(${classObject.primaryKeyVar.type.javaName} ${classObject.primaryKeyVar.name.camelCaseName})  {
+        String url = createUrl("/{id}");
+        return getRestTemplate().getForObject(url, ${classObject.name.parcelCaseName}Dto.class,${classObject.primaryKeyVar.name.camelCaseName});
     }
 
     public void post${classObject.name.parcelCaseName}(${classObject.name.parcelCaseName}Dto ${classObject.name.camelCaseName}Dto)  {
         String url = createUrl();
-        getRestTemplate.postForObject(url, ${classObject.name.camelCaseName}Dto, ${classObject.name.parcelCaseName}Dto.class);
+        getRestTemplate().postForObject(url, ${classObject.name.camelCaseName}Dto, ${classObject.name.parcelCaseName}Dto.class);
     }
 
     public void put${classObject.name.parcelCaseName}(${classObject.name.parcelCaseName}Dto ${classObject.name.camelCaseName}Dto)  {
-        String url = createUrl("/{id}",${classObject.primaryKeyVar.name.camelCaseName}.get${classObject.name.parcelCaseName}Dto);
-        getRestTemplate.putForObject(url, ${classObject.name.camelCaseName}Dto, ${classObject.name.parcelCaseName}Dto.class);
+        String url = createUrl("/{id}");
+        getRestTemplate().put(url, ${classObject.name.camelCaseName}Dto, ${classObject.name.parcelCaseName}Dto.class,${classObject.name.camelCaseName}Dto.get${classObject.primaryKeyVar.name.parcelCaseName}());
     }
 
-    public void delete${classObject.name.parcelCaseName}(${classObject.primaryKeyVar.type.javaName} ${classObject.primaryKeyVar.name.camelCaseName}))  {
-        String url = createUrl("/{id}",${classObject.primaryKeyVar.name.camelCaseName});
-        getRestTemplate.deleteObject(url);
+    public void delete${classObject.name.parcelCaseName}(${classObject.primaryKeyVar.type.javaName} ${classObject.primaryKeyVar.name.camelCaseName})  {
+        String url = createUrl("/{id}");
+        getRestTemplate().delete(url,${classObject.primaryKeyVar.name.camelCaseName});
     }
 
 }

@@ -53,6 +53,12 @@ public class FileGenerator {
         }
     }
 
+    public void generateAndroidBaseClient() throws Exception {
+        removePostFixFromDirMap(GenesisConstants.CON_DIR_JAVA_CLIENT);
+        VelocityContext context = new VelocityContext();
+        generateFile(genDirList.get(GenesisConstants.CON_DIR_JAVA_CLIENT) + "BaseClient.java", TemplateEnum.JAVA_BASE_CLIENT.getLocation(), context);
+    }
+
     public void generatePhpBindings() throws Exception {
         removePostFixFromDirMap(GenesisConstants.CON_DIR_PHP_BINDINGS);
         for (ClassObject classObject : classObjects) {

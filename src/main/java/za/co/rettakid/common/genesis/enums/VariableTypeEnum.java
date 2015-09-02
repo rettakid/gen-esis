@@ -5,19 +5,25 @@ package za.co.rettakid.common.genesis.enums;
  */
 public enum VariableTypeEnum {
 
-    INT("Integer",null),
-    VARCHAR("String",null),
-    BOOLEAN("Boolean",null),
-    FLOAT("Float",null),
-    DATE("Date","import java.util.Date;"),
-    REF("EMPTY",null);
+    INT("integer","Integer",null),
+    VARCHAR("string","String",null),
+    BOOLEAN("boolean","Boolean",null),
+    FLOAT("float","Float",null),
+    DATE("datetime","Date","import java.util.Date;"),
+    REF("string","EMPTY",null);
 
+    private String phpName;
     private String javaName;
     private String javaImport;
 
-    private VariableTypeEnum(String javaName,String javaImport) {
+    private VariableTypeEnum(String phpName,String javaName,String javaImport) {
+        this.phpName = phpName;
         this.javaName = javaName;
         this.javaImport = javaImport;
+    }
+
+    public String getPhpName() {
+        return phpName;
     }
 
     public String getJavaName() {

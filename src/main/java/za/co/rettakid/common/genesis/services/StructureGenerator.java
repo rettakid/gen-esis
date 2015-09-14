@@ -36,6 +36,8 @@ public class StructureGenerator {
         genDirList.put(GenesisConstants.CON_DIR_JAVA_ROOT, null);
         genDirList.put(GenesisConstants.CON_DIR_JAVA_CLIENT, null);
         genDirList.put(GenesisConstants.CON_DIR_JAVA_DTO, null);
+        genDirList.put(GenesisConstants.CON_DIR_JAVA_VO, null);
+        genDirList.put(GenesisConstants.CON_DIR_JAVA_BINDING, null);
     }
 
     public void generatorStructure(String schemeLocation) {

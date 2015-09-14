@@ -1,0 +1,24 @@
+package za.co.rettakid.dto;
+
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
+import java.util.List;
+
+#foreach(${import} in ${imports})
+${import}
+#end
+
+@Root(name = "${classObject.name.lowerCaseName}listdto")
+public class ${classObject.name.parcelCaseName}ListDto   {
+
+    @ElementList(name = "${classObject.name.lowerCaseName}s",type = ${classObject.name.parcelCaseName}Dto.class)
+    private List<${classObject.name.parcelCaseName}Dto> ${classObject.name.camelCaseName}s;
+
+    public List<${classObject.name.parcelCaseName}Dto> get${classObject.name.parcelCaseName}List()   {
+        return this.${classObject.name.camelCaseName}s;
+    }
+
+    public void set${classObject.name.parcelCaseName}List(List<${classObject.name.parcelCaseName}Dto> ${classObject.name.camelCaseName}s)   {
+        this.${classObject.name.camelCaseName}s = ${classObject.name.camelCaseName}s;
+    }
+}

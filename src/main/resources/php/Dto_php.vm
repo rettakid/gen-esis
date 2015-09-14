@@ -17,45 +17,49 @@ class Dto {
 		${H}reflect = new \ReflectionClass(${H}this);
 		${H}className = ${H}reflect->getShortName();
 		${H}classVars = ${H}reflect->getMethods();
+		${H}displayClassName = strtolower(${H}className);
 
-		echo "<${H}className>";
+		echo "<${H}displayClassName>";
 		foreach (${H}classVars as ${H}classVar)	{
 			${H}methodName = ${H}classVar->getName();
 			if (substr(${H}methodName,0,3) == "get")	{
-				${H}displaName = substr(${H}methodName,3,strlen(${H}methodName) - 3);
+				${H}displayName = substr(${H}methodName,3,strlen(${H}methodName) - 3);
 				${H}methodValue = ${H}this->${H}methodName();
-				${H}displaName = strtolower(${H}displaName);
+				${H}displayName = strtolower(${H}displayName);
 				if (is_array(${H}methodValue)) {
+					echo "<${H}displayName>";
 					foreach (${H}methodValue as ${H}item) {
 						${H}item->printXml(${H}app);
 					}
-				}
-				elseif (${H}methodValue instanceof dto)	{
+					echo "</${H}displayName>";
+				} elseif (${H}methodValue instanceof DateTime)	{
+					${H}displayMethodValue = ${H}methodValue->format('Y-m-d H:i:s').'.9 SAST';
+					echo "<${H}displayName>${H}displayMethodValue</${H}displayName>";
+				} elseif (${H}methodValue instanceof Dto)	{
 					${H}methodValue->printXml(${H}app);
 				}  else 	{
-					echo "<${H}displaName>${H}methodValue</${H}displaName>";
+					echo "<${H}displayName>${H}methodValue</${H}displayName>";
 				}
 			}
 			
 		}
-		echo "</${H}className>";
+		echo "</${H}displayClassName>";
 	}
 
-	public function bindJson(${H}app)	{
+	public function bindXml(${H}app)	{
 		${H}reflect = new \ReflectionClass(${H}this);
 		${H}className = ${H}reflect->getShortName();
 		${H}classVars = ${H}reflect->getMethods();
+		${H}body = ${H}app->request()->getBody();
+        ${H}xml = simplexml_load_string(${H}body);
 		foreach (${H}classVars as ${H}classVar)	{
 			${H}methodName = ${H}classVar->getName();
-			${H}displayName = ucwords(substr(${H}methodName,3,strlen(${H}methodName) - 3));
+			${H}displayName = strtolower(ucwords(substr(${H}methodName,3,strlen(${H}methodName) - 3)));
 			if (substr(${H}methodName,0,3) == "set")	{
-				echo ${H}displayName;
-				${H}data = ${H}app->request()->params(${H}displayName);
+				${H}data = ${H}xml->${H}displayName;
 				${H}this->${H}methodName(${H}data);
-				
 			}
 		}
-
 	}
 
 	public function printJson(${H}app)	{

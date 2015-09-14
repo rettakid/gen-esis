@@ -1,0 +1,38 @@
+package za.co.rettakid.carwash.binding;
+
+import za.co.rettakid.carwash.models.dto.*;
+import za.co.rettakid.carwash.models.vo.*;
+
+public class Bind${classObject.name.parcelCaseName} {
+
+    public static ${classObject.name.parcelCaseName}Vo bind${classObject.name.parcelCaseName}(${classObject.name.parcelCaseName}Dto ${classObject.name.camelCaseName}Dto) {
+        ${classObject.name.parcelCaseName}Vo ${classObject.name.camelCaseName}Vo = null;
+        if (${classObject.name.camelCaseName}Dto != null)    {
+            ${classObject.name.camelCaseName}Vo = new ${classObject.name.parcelCaseName}Vo();
+#foreach(${variable} in ${classObject.variables})
+#if (${variable.type.variableTypeEnum} == 'REF')
+            ${classObject.name.camelCaseName}Vo.setReal${variable.name.parcelCaseName}(Bind${variable.name.parcelCaseName}.bind${variable.name.parcelCaseName}(${classObject.name.camelCaseName}Dto.get${variable.name.parcelCaseName}()));
+#else
+            ${classObject.name.camelCaseName}Vo.setReal${variable.name.parcelCaseName}(${classObject.name.camelCaseName}Dto.get${variable.name.parcelCaseName}());
+#end
+#end
+        }
+        return ${classObject.name.camelCaseName}Vo;
+    }
+
+    public static ${classObject.name.parcelCaseName}Dto bind${classObject.name.parcelCaseName}(${classObject.name.parcelCaseName}Vo ${classObject.name.camelCaseName}Vo) {
+        ${classObject.name.parcelCaseName}Dto ${classObject.name.camelCaseName}Dto = null;
+        if (${classObject.name.camelCaseName}Vo != null)    {
+            ${classObject.name.camelCaseName}Dto = new ${classObject.name.parcelCaseName}Dto();
+#foreach(${variable} in ${classObject.variables})
+#if (${variable.type.variableTypeEnum} == 'REF')
+            ${classObject.name.camelCaseName}Dto.set${variable.name.parcelCaseName}(Bind${variable.name.parcelCaseName}.bind${variable.name.parcelCaseName}(${classObject.name.camelCaseName}Vo.getReal${variable.name.parcelCaseName}()));
+#else
+            ${classObject.name.camelCaseName}Dto.set${variable.name.parcelCaseName}(${classObject.name.camelCaseName}Vo.getReal${variable.name.parcelCaseName}());
+#end
+#end
+        }
+        return ${classObject.name.camelCaseName}Dto;
+    }
+
+}

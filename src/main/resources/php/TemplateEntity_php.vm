@@ -1,6 +1,6 @@
 <?php
 
-/** @Entity @Table(name="pacs_${classObject.name.lowerCaseOrgName}") **/
+/** @Entity @Table(name="${databaseName.lowerCaseOrgName}_${classObject.name.lowerCaseOrgName}") **/
 class ${classObject.name.parcelCaseName}Entity 	{
 
 #foreach(${variable} in ${classObject.variables})
@@ -21,13 +21,24 @@ class ${classObject.name.parcelCaseName}Entity 	{
 #else
     #set($length = '')
 #end
-    /** ${id}@Column(name="${variable.name.lowerCaseOrgName}", type="${variable.type.phpName}"${length}${nullity})${autoGen} **/
+#if (${variable.type.variableTypeEnum} == 'REF')
+    #set($type = '')
+    #set($column = '@ManyToOne(targetEntity="' + ${variable.type.phpName} + 'Entity" , fetch="LAZY") @JoinColumn(name="' + ${variable.orgName.originalName} + '", referencedColumnName="' + ${variable.reference.name.originalName} + '")')
+#else
+    #set($type = ' , type="'+${variable.type.phpName} + '"')
+    #set($column = '@Column(name="' + ${variable.orgName.originalName} + '"' + ${type} + ${length} + ${nullity} + ')')
+#end
+    /** ${id}${column}${autoGen} **/
     protected ${H}${variable.name.camelCaseName};
 #end
 
 #foreach(${variable} in ${classObject.variables})
     public function get${variable.name.parcelCaseName}()	{
-		return ${H}this->${variable.name.camelCaseName};
+#if (${variable.type.phpName} == 'boolean')
+        return (${H}this->${variable.name.camelCaseName}) ? 'true' : 'false';
+#else
+        return ${H}this->${variable.name.camelCaseName};
+#end
 	}
 
 	public function set${variable.name.parcelCaseName}(${H}${variable.name.camelCaseName})	{

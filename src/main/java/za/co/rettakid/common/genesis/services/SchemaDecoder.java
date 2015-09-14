@@ -1,5 +1,7 @@
 package za.co.rettakid.common.genesis.services;
 
+import za.co.rettakid.common.genesis.common.Utilz;
+import za.co.rettakid.common.genesis.enums.NamingStd;
 import za.co.rettakid.common.genesis.enums.NullityTypeEnum;
 import za.co.rettakid.common.genesis.enums.VariableTypeEnum;
 import za.co.rettakid.common.genesis.pojo.ClassObject;
@@ -17,60 +19,73 @@ import java.util.regex.Pattern;
  */
 public class SchemaDecoder {
 
-    private static final String tablePattern = "CREATE\\sTABLE\\sPACS_([A-Z_]+)\\s\\((.*?)(\\n\\))";
+    private static final String databaseNamePattern = "CREATE\\sDATABASE\\s([A-Z_]+)";
+    private static final String tablePattern = "CREATE\\sTABLE\\s%s_([A-Z_]+)\\s\\((.*?)(\\n\\))";
     private static final String varLenPattern = "\\n\\s+([A-Z_]+)\\s+([A-Z]+)\\((\\d+)\\)\\s+(NULL|NOT\\sNULL)";
     private static final String varPattern = "\\n\\s+([A-Z_]+)\\s+([A-Z]+)\\s+(NULL|NOT\\sNULL)";
     private static final String primaryKeyPattern = "\\n\\s+PRIMARY\\sKEY\\s+\\(([A-Z_]+)\\)";
-    private static final String referencePattern = "\\n\\s+FOREIGN\\sKEY\\s+\\(([A-Z_]+)\\)\\sREFERENCES\\sPACS_([A-Z_]+)\\(([A-Z_]+)\\)";
+    private static final String referencePattern = "\\n\\s+FOREIGN\\sKEY\\s+\\(([A-Z_]+)\\)\\sREFERENCES\\s%s_([A-Z_]+)\\(([A-Z_]+)\\)";
 
-    public static List<ClassObject> decodeScheme(String schemeLocation)    {
+    private GeneratedName databaseName;
+    private List<ClassObject> classObjects;
+
+    private void decodeDatabaseName(String schemeLocation) {
+        Matcher matchDbName = Pattern.compile(databaseNamePattern).matcher(FileHandler.getFileText(schemeLocation));
+        databaseName = (matchDbName.find()) ? new GeneratedName(matchDbName.group(1)) : null;
+    }
+
+    public void decodeScheme(String schemeLocation)    {
         List<ClassObject> classObjects = new ArrayList<>();
-
-        Matcher matchTables = Pattern.compile(tablePattern, Pattern.DOTALL | Pattern.MULTILINE).matcher(FileHandler.getFileText(schemeLocation));
+        decodeDatabaseName(schemeLocation);
+        Matcher matchTables = Pattern.compile(String.format(tablePattern,databaseName.getOriginalName()), Pattern.DOTALL | Pattern.MULTILINE).matcher(FileHandler.getFileText(schemeLocation));
 
         while (matchTables.find()) {
             ClassObject classObject = new ClassObject();
             classObject.setName(new GeneratedName(matchTables.group(1)));
 
-            classObject.addAllVariables(getVariablesWithOutLength(matchTables.group(2)));
-            classObject.addAllVariables(getVariablesWithLength(matchTables.group(2)));
-            setReferencedObjects(matchTables.group(2),classObject,classObjects);
-            classObject.setPrimaryKeyVar(getPrimaryKey(matchTables.group(2),classObject.getVariables()));
+            classObject.addAllVariables(getVariablesWithOutLength(matchTables.group(2), classObject));
+            classObject.addAllVariables(getVariablesWithLength(matchTables.group(2), classObject));
+            setReferencedObjects(matchTables.group(2), classObject, classObjects);
+            classObject.setPrimaryKeyVar(getPrimaryKey(matchTables.group(2), classObject.getVariables()));
 
             classObjects.add(classObject);
         }
-        return classObjects;
+        this.classObjects = classObjects;
     }
 
-    private static List<VariableObject> getVariablesWithOutLength(String text)  {
+    private List<VariableObject> getVariablesWithOutLength(String text,ClassObject classObject)  {
         Matcher matcher = Pattern.compile(varLenPattern).matcher(text);
         List<VariableObject> variableObjects = new ArrayList<>();
         while (matcher.find()) {
             VariableObject variable = new VariableObject();
+            variable.setOrgName(new GeneratedName(matcher.group(1)));
             variable.setName(new GeneratedName(matcher.group(1)));
             variable.setType(new VariableType(VariableTypeEnum.setEnum(matcher.group(2))));
             variable.setLength(Integer.parseInt(matcher.group(3)));
             variable.setNullity(NullityTypeEnum.setEnum(matcher.group(4)));
+            variable.setClassObject(classObject);
             variableObjects.add(variable);
         }
         return variableObjects;
     }
 
-    private static List<VariableObject> getVariablesWithLength(String text)  {
+    private List<VariableObject> getVariablesWithLength(String text,ClassObject classObject)  {
         Matcher matcher = Pattern.compile(varPattern).matcher(text);
         List<VariableObject> variableObjects = new ArrayList<VariableObject>();
         while (matcher.find()) {
             VariableObject variable = new VariableObject();
+            variable.setOrgName(new GeneratedName(matcher.group(1)));
             variable.setName(new GeneratedName(matcher.group(1)));
             variable.setType(new VariableType(VariableTypeEnum.setEnum(matcher.group(2))));
             variable.setNullity(NullityTypeEnum.setEnum(matcher.group(3)));
+            variable.setClassObject(classObject);
             variableObjects.add(variable);
         }
         return variableObjects;
     }
 
-    private static void setReferencedObjects(String text,ClassObject curClassObject,List<ClassObject> classObjects)  {
-        Matcher matcher = Pattern.compile(referencePattern).matcher(text);
+    private void setReferencedObjects(String text,ClassObject curClassObject,List<ClassObject> classObjects)  {
+        Matcher matcher = Pattern.compile(String.format(referencePattern,databaseName.getOriginalName())).matcher(text);
         while (matcher.find())  {
             for (ClassObject classObject : classObjects) {
                 if (classObject.getName().getOriginalName().equals(matcher.group(2)))   {
@@ -78,9 +93,11 @@ public class SchemaDecoder {
                         if (matcher.group(1).equals(variableObject.getName().getOriginalName()))    {
                             VariableType variableType = new VariableType(VariableTypeEnum.REF);
                             variableType.setJavaName(classObject.getName().getParcelCaseName());
+                            variableType.setPhpName(classObject.getName().getParcelCaseName());
                             variableObject.setType(variableType);
                             variableObject.setLength(null);
-                            variableObject.setName(new GeneratedName(classObject.getName().getCamelCaseName()));
+                            variableObject.setName(new GeneratedName(Utilz.convertToUnderscoreCase(classObject.getName().getCamelCaseName(), NamingStd.CAMEL)));
+                            variableObject.setReference(classObject.getPrimaryKeyVar());
                             break;
                         }
                     }
@@ -90,7 +107,7 @@ public class SchemaDecoder {
         }
     }
 
-    private static VariableObject getPrimaryKey(String text,List<VariableObject> variableObjects)   {
+    private VariableObject getPrimaryKey(String text,List<VariableObject> variableObjects)   {
         Matcher matcher = Pattern.compile(primaryKeyPattern).matcher(text);
         VariableObject primaryKey = null;
         while (matcher.find()) {
@@ -107,4 +124,19 @@ public class SchemaDecoder {
         return primaryKey;
     }
 
+    public GeneratedName getDatabaseName() {
+        return databaseName;
+    }
+
+    public void setDatabaseName(GeneratedName databaseName) {
+        this.databaseName = databaseName;
+    }
+
+    public List<ClassObject> getClassObjects() {
+        return classObjects;
+    }
+
+    public void setClassObjects(List<ClassObject> classObjects) {
+        this.classObjects = classObjects;
+    }
 }

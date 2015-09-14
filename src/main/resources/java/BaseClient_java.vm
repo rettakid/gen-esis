@@ -1,14 +1,24 @@
-package rettakid.carwash;
+package za.co.rettakid.carwash;
+
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 
 import org.springframework.http.converter.xml.SimpleXmlHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-public class BaseClient {
+import za.co.rettakid.carwash.utils.CarWashErrorCode;
+import za.co.rettakid.carwash.utils.CarshWashRuntimeError;
 
-    protected String baseUrl = "http://192.168.1.33:80/pacs/xml.php";
+public class BaseClient extends AsyncTask<Object, Void, Object> {
+
+    protected String baseUrl = "http://192.168.1.36:80/${databaseName.lowerCaseOrgName}/xml.php";
     protected RestTemplate restTemplate = new RestTemplate();
+    protected Context context;
 
-    public BaseClient(String localUrl) {
+    public BaseClient(String localUrl,Context context) {
+        this.context = context
         restTemplate.getMessageConverters().add(new SimpleXmlHttpMessageConverter());
         this.baseUrl = this.baseUrl + localUrl;
     }
@@ -24,4 +34,21 @@ public class BaseClient {
     public RestTemplate getRestTemplate() {
         return restTemplate;
     }
+
+    protected void checkNetworkConnection() {
+        ConnectivityManager connMgr = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+
+        } else {
+            throw new CarshWashRuntimeError(CarWashErrorCode.CANNOT_FIND_CONNECTION);
+        }
+    }
+
+    @Override
+    protected Object doInBackground(Object... params) {
+        checkNetworkConnection();
+        return null;
+    }
+
 }

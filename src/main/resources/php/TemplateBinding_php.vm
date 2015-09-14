@@ -18,12 +18,26 @@ function bind${classObject.name.parcelCaseName}Entity(${H}${classObject.name.cam
 	if (${H}${classObject.name.camelCaseName}Entity != null)	{
 		${H}${classObject.name.camelCaseName}Dto = new ${classObject.name.parcelCaseName}Dto();
 #foreach(${variable} in ${classObject.variables})
+#if (${variable.type.variableTypeEnum} == 'REF')
+        ${H}${classObject.name.camelCaseName}Dto->set${variable.name.parcelCaseName}(bind${variable.reference.classObject.name.parcelCaseName}Entity(${H}${classObject.name.camelCaseName}Entity->get${variable.name.parcelCaseName}()));
+#else
         ${H}${classObject.name.camelCaseName}Dto->set${variable.name.parcelCaseName}(${H}${classObject.name.camelCaseName}Entity->get${variable.name.parcelCaseName}());
+#end
 #end
         return ${H}${classObject.name.camelCaseName}Dto;
     }	else {
         return null;
     }
+}
+
+function bind${classObject.name.parcelCaseName}EntityArray(${H}${classObject.name.camelCaseName}Entitys)   {
+    ${H}${classObject.name.camelCaseName}Dtos = new ${classObject.name.parcelCaseName}ListDto();
+    ${H}${classObject.name.camelCaseName}DtoArray = array();
+    foreach (${H}${classObject.name.camelCaseName}Entitys as ${H}${classObject.name.camelCaseName}Entity => ${H}value) {
+        array_push(${H}${classObject.name.camelCaseName}DtoArray, bind${classObject.name.parcelCaseName}Entity(${H}value));
+    }
+    ${H}${classObject.name.camelCaseName}Dtos->set${classObject.name.parcelCaseName}s(${H}${classObject.name.camelCaseName}DtoArray);
+    return ${H}${classObject.name.camelCaseName}Dtos;
 }
 
 ?>

@@ -6,6 +6,9 @@ require_once (${H}PROJ_COMMON_BINDING_ROOT.'${classObject.name.parcelCaseName}Bi
 
 ${H}app->get('/${classObject.name.lowerCaseName}s', function () use (${H}app) {
 	global ${H}entityManager;
+   	${H}${classObject.name.camelCaseName}Entities = ${H}entityManager->getRepository("${classObject.name.parcelCaseName}Entity")->findBy(array());
+    ${H}${classObject.name.camelCaseName}s = bind${classObject.name.parcelCaseName}EntityArray(${H}${classObject.name.camelCaseName}Entities);
+    ${H}${classObject.name.camelCaseName}s->printData(${H}app);
 });
 
 ${H}app->get('/${classObject.name.lowerCaseName}s/:id', function (${H}id) use (${H}app) {

@@ -6,10 +6,12 @@ package za.co.rettakid.common.genesis.enums;
 public enum VariableTypeEnum {
 
     INT("integer","Integer",null),
+    BIGINT("bigint","Long",null),
     VARCHAR("string","String",null),
     BOOLEAN("boolean","Boolean",null),
     FLOAT("float","Float",null),
     DATE("datetime","Date","import java.util.Date;"),
+    BLOB("string","String",null),
     REF("string","EMPTY",null);
 
     private String phpName;

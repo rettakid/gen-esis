@@ -2,26 +2,37 @@ package za.co.rettakid.dto;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
+import java.io.Serializable;
 
 #foreach(${import} in ${imports})
 ${import}
 #end
 
-@Root
-public class ${classObject.name.parcelCaseName}Dto   {
+@Root(name = "${classObject.name.lowerCaseName}")
+public class ${classObject.name.parcelCaseName}Dto implements Serializable    {
 
 #foreach(${variable} in ${classObject.variables})
+#if(${variable.type.variableTypeEnum} == 'REF')
+    @Element(name = "${variable.name.lowerCaseName}dto")
+    private ${variable.type.javaName}Dto ${variable.name.camelCaseName};
+#else
     @Element(name = "${variable.name.lowerCaseName}")
     private ${variable.type.javaName} ${variable.name.camelCaseName};
 #end
+#end
 
 #foreach(${variable} in ${classObject.variables})
+#if(${variable.type.variableTypeEnum} == 'REF')
+    #set($type = ${variable.type.javaName} + 'Dto')
+#else
+    #set($type = ${variable.type.javaName})
+#end
 
-    public ${variable.type.javaName} get${variable.name.parcelCaseName}()   {
+    public ${type} get${variable.name.parcelCaseName}()   {
         return this.${variable.name.camelCaseName};
     }
 
-    public void set${variable.name.parcelCaseName}(${variable.type.javaName} ${variable.name.camelCaseName})   {
+    public void set${variable.name.parcelCaseName}(${type} ${variable.name.camelCaseName})   {
         this.${variable.name.camelCaseName} = ${variable.name.camelCaseName};
     }
 #end

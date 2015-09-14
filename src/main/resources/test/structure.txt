@@ -21,5 +21,9 @@ root
          └─ rettakid
             ├─ network
             │  └─ java_client
+            ├─ vo
+            │  └─ java_vo
+            ├─ binding
+            │  └─ java_binding
             └─ models
                └─ java_dto

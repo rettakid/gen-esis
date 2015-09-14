@@ -8,10 +8,21 @@ import za.co.rettakid.common.genesis.enums.NullityTypeEnum;
 public class VariableObject {
 
     private GeneratedName name;
+    private GeneratedName orgName;
     private VariableType type;
     private Integer length;
     private NullityTypeEnum nullity;
     private Boolean isPk = false;
+    private VariableObject reference;
+    private ClassObject classObject;
+
+    public ClassObject getClassObject() {
+        return classObject;
+    }
+
+    public void setClassObject(ClassObject classObject) {
+        this.classObject = classObject;
+    }
 
     public GeneratedName getName() {
         return name;
@@ -19,6 +30,14 @@ public class VariableObject {
 
     public void setName(GeneratedName name) {
         this.name = name;
+    }
+
+    public GeneratedName getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(GeneratedName orgName) {
+        this.orgName = orgName;
     }
 
     public VariableType getType() {
@@ -51,5 +70,13 @@ public class VariableObject {
 
     public void setIsPk(Boolean isPk) {
         this.isPk = isPk;
+    }
+
+    public VariableObject getReference() {
+        return reference;
+    }
+
+    public void setReference(VariableObject reference) {
+        this.reference = reference;
     }
 }

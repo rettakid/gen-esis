@@ -14,5 +14,7 @@ public class GenesisConstants {
     public static final String CON_DIR_JAVA_ROOT = "java_root";
     public static final String CON_DIR_JAVA_CLIENT = "java_client";
     public static final String CON_DIR_JAVA_DTO = "java_dto";
+    public static final String CON_DIR_JAVA_VO = "java_vo";
+    public static final String CON_DIR_JAVA_BINDING = "java_binding";
     
 }

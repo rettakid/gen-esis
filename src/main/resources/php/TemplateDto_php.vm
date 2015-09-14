@@ -21,7 +21,7 @@ class ${classObject.name.parcelCaseName}Dto extends Dto 	{
 
 }
 
-class ${classObject.name.parcelCaseName}List extends Dto {
+class ${classObject.name.parcelCaseName}ListDto extends Dto {
 
 	private ${H}${classObject.name.camelCaseName}s = array();
 

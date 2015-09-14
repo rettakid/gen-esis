@@ -10,7 +10,7 @@ public class StructureDir {
 
     private String dirName;
     private String dirPath = "";
-    private List<StructureDir> structureDirs = new ArrayList<StructureDir>();
+    private List<StructureDir> structureDirs = new ArrayList<>();
     private String structureText;
 
     public String getDirName() {

@@ -17,8 +17,8 @@ public class GeneratedName {
     public GeneratedName(String originalName)  {
         this.originalName = originalName;
         this.lowerCaseOrgName = originalName.toLowerCase();
-        this.camelCaseName = Utilz.convertTo(originalName.toLowerCase(), NamingStd.CAMEL);
-        this.parcelCaseName = Utilz.convertTo(originalName.toLowerCase(), NamingStd.PARCEL);
+        this.camelCaseName = Utilz.convertUnderscoreCaseTo(originalName.toLowerCase(), NamingStd.CAMEL);
+        this.parcelCaseName = Utilz.convertUnderscoreCaseTo(originalName.toLowerCase(), NamingStd.PARCEL);
         this.lowerCaseName = this.camelCaseName.toLowerCase();
     }
 

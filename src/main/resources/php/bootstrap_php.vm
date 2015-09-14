@@ -9,7 +9,7 @@ ${H}config = Setup::createAnnotationMetadataConfiguration(array(${H}PROJ_PERSIST
 ${H}conn = array(
     'driver'   => 'pdo_mysql',
     'host'     => '127.0.0.1',
-    'dbname'   => 'pacs',
+    'dbname'   => '${databaseName.lowerCaseOrgName}',
     'user'     => 'root',
     'password' => ''
 );

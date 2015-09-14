@@ -49,4 +49,5 @@ public class VariableType {
     public void setPhpName(String phpName) {
         this.phpName = phpName;
     }
+
 }

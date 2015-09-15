@@ -19,6 +19,17 @@ ${H}app->get('/${classObject.name.lowerCaseName}s/:id', function (${H}id) use ($
 	${H}${classObject.name.camelCaseName}Dto->printData(${H}app);
 });
 
+${H}app->post('/${classObject.name.lowerCaseName}s/list', function () use (${H}app) {
+	global ${H}entityManager;
+	${H}${classObject.name.camelCaseName}ListDto = new ${classObject.name.parcelCaseName}ListDto();
+	${H}${classObject.name.camelCaseName}ListDto = ${H}${classObject.name.camelCaseName}ListDto->bindXml($app);
+	foreach (${H}${classObject.name.camelCaseName}ListDto->get${classObject.name.parcelCaseName}s() as ${H}${classObject.name.camelCaseName}Dto) {
+		${H}${classObject.name.camelCaseName}Entity = bind${classObject.name.parcelCaseName}Dto(${H}${classObject.name.camelCaseName}Dto);
+		${H}entityManager->persist(${H}${classObject.name.camelCaseName}Entity);
+		${H}entityManager->flush();
+	}
+});
+
 ${H}app->put('/${classObject.name.lowerCaseName}s/:id', function (${H}id) use (${H}app) {
 	global ${H}entityManager;
 	${H}${classObject.name.camelCaseName}Entity = ${H}entityManager->find("${classObject.name.parcelCaseName}Entity", ${H}id);
@@ -43,5 +54,16 @@ ${H}app->delete('/${classObject.name.lowerCaseName}s/:id', function (${H}id) use
 	${H}entityManager->remove(${H}${classObject.name.camelCaseName}Entity);
 	${H}entityManager->flush();
 });
+
+/*Referances*/
+#foreach(${reference} in ${classObject.references})
+
+${H}app->get('/${classObject.name.lowerCaseName}s/:id/${reference.name.lowerCaseName}s', function (${H}id) use (${H}app) {
+	global ${H}entityManager;
+   	${H}${reference.name.camelCaseName}Entities = ${H}entityManager->getRepository("${reference.name.parcelCaseName}Entity")->findBy(array('${classObject.name.lowerCaseName}'=>$id));
+    ${H}${reference.name.camelCaseName} = bind${reference.name.parcelCaseName}EntityArray(${H}${reference.name.camelCaseName}Entities);
+    ${H}${reference.name.camelCaseName}->printData($app);
+});
+#end
 
 ?>

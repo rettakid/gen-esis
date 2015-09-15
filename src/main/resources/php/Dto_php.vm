@@ -47,19 +47,38 @@ class Dto {
 	}
 
 	public function bindXml(${H}app)	{
-		${H}reflect = new \ReflectionClass(${H}this);
-		${H}className = ${H}reflect->getShortName();
-		${H}classVars = ${H}reflect->getMethods();
 		${H}body = ${H}app->request()->getBody();
         ${H}xml = simplexml_load_string(${H}body);
-		foreach (${H}classVars as ${H}classVar)	{
-			${H}methodName = ${H}classVar->getName();
+        ${H}className = new ReflectionClass(${H}this);
+		return ${H}this->bindXmlData(${H}xml,${H}className->getShortName(),${H}className->getMethods());
+	}
+
+	public function bindXmlData(${H}xml,${H}objClass,${H}objMthods)	{
+		${H}obj = new ${H}objClass();
+		foreach (${H}objMthods as ${H}medthod)	{
+			${H}methodName = ${H}medthod->getName();
 			${H}displayName = strtolower(ucwords(substr(${H}methodName,3,strlen(${H}methodName) - 3)));
+			${H}getterName = 'get'.substr(${H}methodName,3);
 			if (substr(${H}methodName,0,3) == "set")	{
-				${H}data = ${H}xml->${H}displayName;
-				${H}this->${H}methodName(${H}data);
+				if (is_array(${H}obj->${H}getterName())) {
+					${H}dtoName = trim(substr(${H}methodName,3),"s")."Dto";
+					${H}dtoXmlName = strtolower(${H}dtoName);
+					${H}child = new ${H}dtoName();
+					${H}className = new ReflectionClass(${H}child);
+					${H}data = array();
+					foreach(${H}xml->${H}displayName->${H}dtoXmlName as ${H}childXml)	{
+						array_push(${H}data,${H}this->bindXmlData(${H}childXml,${H}className->getShortName(),${H}className->getMethods()));
+					}
+				} else if(${H}obj->${H}getterName() instanceof Dto)	{
+					${H}className = new ReflectionClass(${H}obj->${H}getterName());
+					${H}data = ${H}this->bindXmlData(${H}xml->${H}displayName,${H}className->getShortName(),${H}className->getMethods());
+				} else {
+					${H}data = ${H}xml->${H}displayName;
+				}
+				${H}obj->${H}methodName(${H}data);
 			}
 		}
+		return ${H}obj;
 	}
 
 	public function printJson(${H}app)	{

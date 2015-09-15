@@ -98,6 +98,15 @@ public class SchemaDecoder {
                             variableObject.setLength(null);
                             variableObject.setName(new GeneratedName(Utilz.convertToUnderscoreCase(classObject.getName().getCamelCaseName(), NamingStd.CAMEL)));
                             variableObject.setReference(classObject.getPrimaryKeyVar());
+
+                            VariableObject reference = new VariableObject();
+                            reference.setClassObject(classObject);
+                            reference.setName(classObject.getName());
+                            for (ClassObject refClassObject : classObjects) {
+                                if (classObject.getName().getOriginalName().equals(refClassObject.getName().getOriginalName())) {
+                                    refClassObject.addReference(curClassObject);
+                                }
+                            }
                             break;
                         }
                     }

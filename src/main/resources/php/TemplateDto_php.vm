@@ -1,12 +1,25 @@
 <?php
 
 require_once ($PROJ_PRESENTATION_DTO_ROOT.'Dto.php');
+#foreach(${variable} in ${classObject.variables})
+#if(${variable.type.variableTypeEnum} == 'REF')
+require_once ($PROJ_PRESENTATION_DTO_ROOT.'${variable.name.parcelCaseName}Dto.php');
+#end
+#end
 
 class ${classObject.name.parcelCaseName}Dto extends Dto 	{
 
 #foreach(${variable} in ${classObject.variables})
     private ${H}${variable.name.camelCaseName};
 #end
+
+	public function __construct()	{
+#foreach(${variable} in ${classObject.variables})
+#if(${variable.type.variableTypeEnum} == 'REF')
+		$this->${variable.name.camelCaseName} = new ${variable.name.parcelCaseName}Dto();
+#end
+#end
+	}
 
 #foreach(${variable} in ${classObject.variables})
     public function get${variable.name.parcelCaseName}()	{

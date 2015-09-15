@@ -11,7 +11,7 @@ public class ClassObject {
     private GeneratedName name;
     private VariableObject primaryKeyVar;
     private List<VariableObject> variables = new ArrayList<>(10);
-    private List<ReferenceObject> references = new ArrayList<>(10);
+    private List<ClassObject> references = new ArrayList<>(10);
 
     public GeneratedName getName() {
         return name;
@@ -41,15 +41,15 @@ public class ClassObject {
         this.variables.addAll(variables);
     }
 
-    public List<ReferenceObject> getReferences() {
+    public List<ClassObject> getReferences() {
         return references;
     }
 
-    public void allReference(ReferenceObject reference) {
+    public void addReference(ClassObject reference) {
         this.references.add(reference);
     }
 
-    public void allAllReferences(List<ReferenceObject> references) {
+    public void addAllReferences(List<ClassObject> references) {
         this.references.addAll(references);
     }
 

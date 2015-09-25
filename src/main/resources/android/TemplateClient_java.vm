@@ -1,7 +1,7 @@
-package za.co.rettakid.common.genesis.services;
+package ${classPackage};
 
 import android.content.Context;
-import za.co.rettakid.carwash.models.dto.*;
+import ${dtoPackage}.*;
 
 public class ${classObject.name.parcelCaseName}Client extends BaseClient   {
 
@@ -10,43 +10,41 @@ public class ${classObject.name.parcelCaseName}Client extends BaseClient   {
     }
 
     public ${classObject.name.parcelCaseName}ListDto get${classObject.name.parcelCaseName}s()  {
-        if (!checkNetworkConnection())  {
-            return null;
-        }
         String url = createUrl();
         return getRestTemplate().getForObject(url, ${classObject.name.parcelCaseName}ListDto.class);
     }
 
     public ${classObject.name.parcelCaseName}Dto get${classObject.name.parcelCaseName}s(${classObject.primaryKeyVar.type.javaName} ${classObject.primaryKeyVar.name.camelCaseName})  {
-        if (!checkNetworkConnection())  {
-            return null;
-        }
         String url = createUrl("/{id}");
         return getRestTemplate().getForObject(url, ${classObject.name.parcelCaseName}Dto.class,${classObject.primaryKeyVar.name.camelCaseName});
     }
 
-    public void post${classObject.name.parcelCaseName}(${classObject.name.parcelCaseName}Dto ${classObject.name.camelCaseName}Dto)  {
-        if (!checkNetworkConnection())  {
-            return;
-        }
+    public ${classObject.name.parcelCaseName}Dto post${classObject.name.parcelCaseName}(${classObject.name.parcelCaseName}Dto ${classObject.name.camelCaseName}Dto)  {
         String url = createUrl();
-        getRestTemplate().postForObject(url, ${classObject.name.camelCaseName}Dto, ${classObject.name.parcelCaseName}Dto.class);
+        return getRestTemplate().postForObject(url, ${classObject.name.camelCaseName}Dto, ${classObject.name.parcelCaseName}Dto.class);
+    }
+
+    public ${classObject.name.parcelCaseName}ListDto post${classObject.name.parcelCaseName}(${classObject.name.parcelCaseName}ListDto ${classObject.name.camelCaseName}ListDto)  {
+        String url = createUrl("/list");
+        return getRestTemplate().postForObject(url, ${classObject.name.camelCaseName}ListDto, ${classObject.name.parcelCaseName}ListDto.class);
     }
 
     public void put${classObject.name.parcelCaseName}(${classObject.name.parcelCaseName}Dto ${classObject.name.camelCaseName}Dto)  {
-        if (!checkNetworkConnection())  {
-            return;
-        }
         String url = createUrl("/{id}");
         getRestTemplate().put(url, ${classObject.name.camelCaseName}Dto, ${classObject.name.parcelCaseName}Dto.class,${classObject.name.camelCaseName}Dto.get${classObject.primaryKeyVar.name.parcelCaseName}());
     }
 
     public void delete${classObject.name.parcelCaseName}(${classObject.primaryKeyVar.type.javaName} ${classObject.primaryKeyVar.name.camelCaseName})  {
-        if (!checkNetworkConnection())  {
-            return;
-        }
         String url = createUrl("/{id}");
         getRestTemplate().delete(url,${classObject.primaryKeyVar.name.camelCaseName});
     }
+
+#foreach(${reference} in ${classObject.references})
+
+    public ${reference.name.parcelCaseName}ListDto get${reference.name.parcelCaseName}s(${reference.primaryKeyVar.type.javaName} ${reference.primaryKeyVar.name.camelCaseName})  {
+        String url = createUrl("/{id}/${reference.name.lowerCaseName}s");
+        return getRestTemplate().getForObject(url, ${reference.name.parcelCaseName}ListDto.class,${reference.primaryKeyVar.name.camelCaseName});
+    }
+#end
 
 }

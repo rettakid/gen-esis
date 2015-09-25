@@ -17,6 +17,8 @@ class ${classObject.name.parcelCaseName}Dto extends Dto 	{
 #foreach(${variable} in ${classObject.variables})
 #if(${variable.type.variableTypeEnum} == 'REF')
 		$this->${variable.name.camelCaseName} = new ${variable.name.parcelCaseName}Dto();
+#elseif(${variable.type.variableTypeEnum} == 'DATE' || ${variable.type.variableTypeEnum} == 'DATETIME')
+		$this->${variable.name.camelCaseName} = new \DateTime("now");
 #end
 #end
 	}

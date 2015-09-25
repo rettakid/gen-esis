@@ -33,11 +33,16 @@ public class StructureGenerator {
         genDirList.put(GenesisConstants.CON_DIR_PHP_CONTROLLERS, null);
         genDirList.put(GenesisConstants.CON_DIR_PHP_DTO, null);
         genDirList.put(GenesisConstants.CON_DIR_PHP_ENTITIES, null);
+
+        genDirList.put(GenesisConstants.CON_DIR_ANDROID_ROOT, null);
+        genDirList.put(GenesisConstants.CON_DIR_ANDROID_CLIENT, null);
+        genDirList.put(GenesisConstants.CON_DIR_ANDROID_DTO, null);
+        genDirList.put(GenesisConstants.CON_DIR_ANDROID_VO, null);
+        genDirList.put(GenesisConstants.CON_DIR_ANDROID_BINDING, null);
+
         genDirList.put(GenesisConstants.CON_DIR_JAVA_ROOT, null);
-        genDirList.put(GenesisConstants.CON_DIR_JAVA_CLIENT, null);
         genDirList.put(GenesisConstants.CON_DIR_JAVA_DTO, null);
-        genDirList.put(GenesisConstants.CON_DIR_JAVA_VO, null);
-        genDirList.put(GenesisConstants.CON_DIR_JAVA_BINDING, null);
+        genDirList.put(GenesisConstants.CON_DIR_JAVA_ENTITY, null);
     }
 
     public void generatorStructure(String schemeLocation) {

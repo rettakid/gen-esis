@@ -2,50 +2,6 @@
 
 class Dto {
 
-	public function printData(${H}app)	{
-		if (true)	{
-			${H}this->printXml(${H}app);
-		} else {
-			${H}this->printJson(${H}app);
-		}
-	}
-
-	public function printXml(${H}app)	{
-		${H}res = ${H}app->response();
-		${H}res['Content-Type'] = 'text/xml';
-
-		${H}reflect = new \ReflectionClass(${H}this);
-		${H}className = ${H}reflect->getShortName();
-		${H}classVars = ${H}reflect->getMethods();
-		${H}displayClassName = strtolower(${H}className);
-
-		echo "<${H}displayClassName>";
-		foreach (${H}classVars as ${H}classVar)	{
-			${H}methodName = ${H}classVar->getName();
-			if (substr(${H}methodName,0,3) == "get")	{
-				${H}displayName = substr(${H}methodName,3,strlen(${H}methodName) - 3);
-				${H}methodValue = ${H}this->${H}methodName();
-				${H}displayName = strtolower(${H}displayName);
-				if (is_array(${H}methodValue)) {
-					echo "<${H}displayName>";
-					foreach (${H}methodValue as ${H}item) {
-						${H}item->printXml(${H}app);
-					}
-					echo "</${H}displayName>";
-				} elseif (${H}methodValue instanceof DateTime)	{
-					${H}displayMethodValue = ${H}methodValue->format('Y-m-d H:i:s').'.9 SAST';
-					echo "<${H}displayName>${H}displayMethodValue</${H}displayName>";
-				} elseif (${H}methodValue instanceof Dto)	{
-					${H}methodValue->printXml(${H}app);
-				}  else 	{
-					echo "<${H}displayName>${H}methodValue</${H}displayName>";
-				}
-			}
-			
-		}
-		echo "</${H}displayClassName>";
-	}
-
 	public function bindXml(${H}app)	{
 		${H}body = ${H}app->request()->getBody();
         ${H}xml = simplexml_load_string(${H}body);
@@ -71,14 +27,63 @@ class Dto {
 					}
 				} else if(${H}obj->${H}getterName() instanceof Dto)	{
 					${H}className = new ReflectionClass(${H}obj->${H}getterName());
+					${H}displayName = ${H}displayName."dto";
 					${H}data = ${H}this->bindXmlData(${H}xml->${H}displayName,${H}className->getShortName(),${H}className->getMethods());
+				} else if(${H}obj->${H}getterName() instanceof DateTime)	{
+					${H}data = new DateTime(${H}xml->${H}displayName);
 				} else {
-					${H}data = ${H}xml->${H}displayName;
+					${H}data = (string)${H}xml->${H}displayName;
 				}
 				${H}obj->${H}methodName(${H}data);
 			}
 		}
 		return ${H}obj;
+	}
+
+	public function printData(${H}app)	{
+		if (true)	{
+			${H}this->printXml(${H}app);
+		} else {
+			${H}this->printJson(${H}app);
+		}
+	}
+
+	public function printXml(${H}app)	{
+		${H}res = ${H}app->response();
+		${H}res['Content-Type'] = 'text/xml';
+
+		${H}reflect = new \ReflectionClass(${H}this);
+		${H}className = ${H}reflect->getShortName();
+		${H}classVars = ${H}reflect->getMethods();
+		${H}displayClassName = strtolower(${H}className);
+
+		echo "<${H}displayClassName>";
+		foreach (${H}classVars as ${H}classVar)	{
+			${H}methodName = ${H}classVar->getName();
+			if (substr(${H}methodName,0,3) == "get")	{
+				${H}displayName = substr(${H}methodName,3,strlen(${H}methodName) - 3);
+				${H}methodValue = ${H}this->${H}methodName();
+				${H}displayName = strtolower(${H}displayName);
+				if (${H}methodValue == null)	{
+					echo "<${H}displayName>null</${H}displayName>";
+				} else if (is_array(${H}methodValue)) {
+					echo "<${H}displayName>";
+					foreach (${H}methodValue as ${H}item) {
+						${H}item->printXml(${H}app);
+					}
+					echo "</${H}displayName>";
+				} elseif (${H}methodValue instanceof DateTime)	{
+					${H}displayMethodValue = ${H}methodValue->format('Y-m-d H:i:s.0 T');
+					echo "<${H}displayName>${H}displayMethodValue</${H}displayName>";
+				} elseif (${H}methodValue instanceof Dto)	{
+					${H}methodValue->printXml(${H}app);
+				}  else 	{
+					echo "<${H}displayName>${H}methodValue</${H}displayName>";
+				}
+			}
+			
+		}
+		echo "</${H}displayClassName>";
 	}
 
 	public function printJson(${H}app)	{

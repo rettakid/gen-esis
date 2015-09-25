@@ -1,6 +1,6 @@
 <?php
 
-/** @Entity @Table(name="${databaseName.lowerCaseOrgName}_${classObject.name.lowerCaseOrgName}") **/
+/** @Entity @Table(name="${databaseName.originalName}_${classObject.name.originalName}") **/
 class ${classObject.name.parcelCaseName}Entity 	{
 
 #foreach(${variable} in ${classObject.variables})

@@ -10,7 +10,8 @@ public enum VariableTypeEnum {
     VARCHAR("string","String",null),
     BOOLEAN("boolean","Boolean",null),
     FLOAT("float","Float",null),
-    DATE("datetime","Date","import java.util.Date;"),
+    DATE("date","Date","import java.util.Date;"),
+    DATETIME("datetime","Date","import java.util.Date;"),
     BLOB("string","String",null),
     REF("string","EMPTY",null);
 

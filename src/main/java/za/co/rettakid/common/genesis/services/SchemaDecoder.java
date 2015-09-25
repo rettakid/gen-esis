@@ -37,7 +37,8 @@ public class SchemaDecoder {
     public void decodeScheme(String schemeLocation)    {
         List<ClassObject> classObjects = new ArrayList<>();
         decodeDatabaseName(schemeLocation);
-        Matcher matchTables = Pattern.compile(String.format(tablePattern,databaseName.getOriginalName()), Pattern.DOTALL | Pattern.MULTILINE).matcher(FileHandler.getFileText(schemeLocation));
+        String schemeAsText = FileHandler.getFileText(schemeLocation);
+        Matcher matchTables = Pattern.compile(String.format(tablePattern,databaseName.getOriginalName()), Pattern.DOTALL | Pattern.MULTILINE).matcher(schemeAsText);
 
         while (matchTables.find()) {
             ClassObject classObject = new ClassObject();

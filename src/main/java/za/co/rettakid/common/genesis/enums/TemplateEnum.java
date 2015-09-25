@@ -5,12 +5,16 @@ package za.co.rettakid.common.genesis.enums;
  */
 public enum TemplateEnum {
 
-    JAVA_BASE_CLIENT("java\\BaseClient_java.vm"),
-    JAVA_CLIENT("java\\TemplateClient_java.vm"),
+    ANDROID_BASE_CLIENT("android\\BaseClient_java.vm"),
+    ANDROID_CLIENT("android\\TemplateClient_java.vm"),
+    ANDROID_DTO("android\\TemplateDto_java.vm"),
+    ANDROID_VO("android\\TemplateVo_java.vm"),
+    ANDROID_BINDING("android\\TemplateBind_java.vm"),
+    ANDROID_LIST_DTO("android\\TemplateListDto_java.vm"),
+
     JAVA_DTO("java\\TemplateDto_java.vm"),
-    JAVA_VO("java\\TemplateVo_java.vm"),
-    JAVA_BINDING("java\\TemplateBind_java.vm"),
-    JAVA_LIST_DTO("java\\TemplateListDto_java.vm"),
+    JAVA_ENTITY("java\\TemplateEntity_java.vm"),
+
     PHP_BINDING("php\\TemplateBinding_php.vm"),
     PHP_CONFIG("php\\config_php.vm"),
     PHP_BOOTSTRAP("php\\bootstrap_php.vm"),

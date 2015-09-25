@@ -1,4 +1,4 @@
-package za.co.rettakid.dto;
+package ${classPackage};
 
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;

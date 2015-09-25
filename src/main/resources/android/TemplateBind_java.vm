@@ -1,7 +1,7 @@
-package za.co.rettakid.carwash.binding;
+package ${classPackage};
 
-import za.co.rettakid.carwash.models.dto.*;
-import za.co.rettakid.carwash.models.vo.*;
+import ${voPackage}.*;
+import ${dtoPackage}.*;
 
 public class Bind${classObject.name.parcelCaseName} {
 

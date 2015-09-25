@@ -1,20 +1,28 @@
 package ${classPackage};
 
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlElement;
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
+import java.io.Serializable;
+
 #foreach(${import} in ${imports})
 ${import}
 #end
 
-@XmlRootElement
-public class ${classObject.name.parcelCaseName}Dto    {
+@Root(name = "${classObject.name.lowerCaseName}dto")
+public class ${classObject.name.parcelCaseName}Dto implements Serializable    {
 
 #foreach(${variable} in ${classObject.variables})
+#if(${variable.isPk} == true || ${variable.nullity} == 'NULL')
+    #set($required = ' , required = false')
+#else
+    #set($required = '')
+#end
+
 #if(${variable.type.variableTypeEnum} == 'REF')
-    @XmlElement(name = "${variable.name.lowerCaseName}dto")
+    @Element(name = "${variable.name.lowerCaseName}dto"$required)
     private ${variable.type.javaName}Dto ${variable.name.camelCaseName};
 #else
-    @XmlElement
+    @Element(name = "${variable.name.lowerCaseName}"$required)
     private ${variable.type.javaName} ${variable.name.camelCaseName};
 #end
 #end

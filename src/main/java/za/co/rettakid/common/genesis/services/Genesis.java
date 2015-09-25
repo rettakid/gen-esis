@@ -1,5 +1,9 @@
 package za.co.rettakid.common.genesis.services;
 
+import za.co.rettakid.common.genesis.services.generetor.AndroidFileGenerator;
+import za.co.rettakid.common.genesis.services.generetor.JavaFileGenerator;
+import za.co.rettakid.common.genesis.services.generetor.PhpFileGenerator;
+
 /**
  * Created by lwazi8 on 26/08/2015.
  */
@@ -17,20 +21,25 @@ public class Genesis {
         SchemaDecoder schemaDecoder = new SchemaDecoder();
         schemaDecoder.decodeScheme(schemeFilePath);
 
-        FileGenerator fileGenerator = new FileGenerator(schemaDecoder.getClassObjects(),structureGenerator.getGenDirList(),schemaDecoder.getDatabaseName());
-        fileGenerator.generateAndroidBaseClient();
-        fileGenerator.generateAndroidClients();
-        fileGenerator.generateAndroidDtos();
-        fileGenerator.generateAndroidVos();
-        fileGenerator.generateAndroidBinding();
-        fileGenerator.generatePhpBindings();
-        fileGenerator.generatePhpCommon();
-        fileGenerator.generatePhpBaseDto();
-        fileGenerator.generatePhpDto();
-        fileGenerator.generatePhpControllers();
-        fileGenerator.generatePhpEntities();
-        fileGenerator.generatePhpXML();
+        AndroidFileGenerator androidFileGenerator = new AndroidFileGenerator(schemaDecoder.getClassObjects(),structureGenerator.getGenDirList(),schemaDecoder.getDatabaseName());
+        androidFileGenerator.generateAndroidBaseClient();
+        androidFileGenerator.generateAndroidClients();
+        androidFileGenerator.generateAndroidBinding();
+        androidFileGenerator.generateAndroidDtos();
+        androidFileGenerator.generateAndroidVos();
 
+        PhpFileGenerator phpFileGenerator = new PhpFileGenerator(schemaDecoder.getClassObjects(),structureGenerator.getGenDirList(),schemaDecoder.getDatabaseName());
+        phpFileGenerator.generatePhpBindings();
+        phpFileGenerator.generatePhpCommon();
+        phpFileGenerator.generatePhpBaseDto();
+        phpFileGenerator.generatePhpDto();
+        phpFileGenerator.generatePhpControllers();
+        phpFileGenerator.generatePhpEntities();
+        phpFileGenerator.generatePhpXML();
+
+        JavaFileGenerator javaFileGenerator = new JavaFileGenerator(schemaDecoder.getClassObjects(),structureGenerator.getGenDirList(),schemaDecoder.getDatabaseName());
+        javaFileGenerator.generateJavaDtos();
+        javaFileGenerator.generateJavaEntities();
     }
 
 }

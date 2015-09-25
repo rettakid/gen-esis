@@ -13,8 +13,18 @@ ${H}app->get('/${classObject.name.lowerCaseName}s', function () use (${H}app) {
 
 ${H}app->get('/${classObject.name.lowerCaseName}s/:id', function (${H}id) use (${H}app) {
 	global ${H}entityManager;
-	${H}${classObject.name.camelCaseName}Entity = new ${classObject.name.parcelCaseName}Entity();
 	${H}${classObject.name.camelCaseName}Entity = ${H}entityManager->find("${classObject.name.parcelCaseName}Entity", ${H}id);
+	${H}${classObject.name.camelCaseName}Dto = bind${classObject.name.parcelCaseName}Entity(${H}${classObject.name.camelCaseName}Entity);
+	${H}${classObject.name.camelCaseName}Dto->printData(${H}app);
+});
+
+${H}app->post('/${classObject.name.lowerCaseName}s', function () use (${H}app) {
+	global ${H}entityManager;
+	${H}${classObject.name.camelCaseName}Dto = new ${classObject.name.parcelCaseName}Dto();
+	${H}${classObject.name.camelCaseName}Dto = ${H}${classObject.name.camelCaseName}Dto->bindXml(${H}app);
+	${H}${classObject.name.camelCaseName}Entity = bind${classObject.name.parcelCaseName}Dto(${H}${classObject.name.camelCaseName}Dto);
+	${H}entityManager->persist(${H}${classObject.name.camelCaseName}Entity);
+	${H}entityManager->flush();
 	${H}${classObject.name.camelCaseName}Dto = bind${classObject.name.parcelCaseName}Entity(${H}${classObject.name.camelCaseName}Entity);
 	${H}${classObject.name.camelCaseName}Dto->printData(${H}app);
 });
@@ -23,26 +33,21 @@ ${H}app->post('/${classObject.name.lowerCaseName}s/list', function () use (${H}a
 	global ${H}entityManager;
 	${H}${classObject.name.camelCaseName}ListDto = new ${classObject.name.parcelCaseName}ListDto();
 	${H}${classObject.name.camelCaseName}ListDto = ${H}${classObject.name.camelCaseName}ListDto->bindXml($app);
+	${H}${classObject.name.camelCaseName}sArray = array();
 	foreach (${H}${classObject.name.camelCaseName}ListDto->get${classObject.name.parcelCaseName}s() as ${H}${classObject.name.camelCaseName}Dto) {
 		${H}${classObject.name.camelCaseName}Entity = bind${classObject.name.parcelCaseName}Dto(${H}${classObject.name.camelCaseName}Dto);
 		${H}entityManager->persist(${H}${classObject.name.camelCaseName}Entity);
 		${H}entityManager->flush();
+		array_push(${H}${classObject.name.camelCaseName}sArray,bind${classObject.name.parcelCaseName}Entity(${H}${classObject.name.camelCaseName}Entity));
 	}
+	${H}${classObject.name.camelCaseName}ListDto = new ${classObject.name.parcelCaseName}ListDto();
+	${H}${classObject.name.camelCaseName}ListDto->set${classObject.name.parcelCaseName}s(${H}${classObject.name.camelCaseName}sArray);
+	${H}${classObject.name.camelCaseName}ListDto->printData(${H}app);
 });
 
 ${H}app->put('/${classObject.name.lowerCaseName}s/:id', function (${H}id) use (${H}app) {
 	global ${H}entityManager;
 	${H}${classObject.name.camelCaseName}Entity = ${H}entityManager->find("${classObject.name.parcelCaseName}Entity", ${H}id);
-	${H}entityManager->flush();
-	${H}${classObject.name.camelCaseName}Dto = bind${classObject.name.parcelCaseName}Entity(${H}${classObject.name.camelCaseName}Entity);
-	${H}${classObject.name.camelCaseName}Dto->printData(${H}app);
-});
-
-${H}app->post('/${classObject.name.lowerCaseName}s', function () use (${H}app) {
-	global ${H}entityManager;
-	${H}${classObject.name.camelCaseName}Dto = new ${classObject.name.parcelCaseName}Dto();
-	${H}${classObject.name.camelCaseName}Dto->bindJson(${H}app);
-	${H}entityManager->persist(${H}${classObject.name.camelCaseName}Entity);
 	${H}entityManager->flush();
 	${H}${classObject.name.camelCaseName}Dto = bind${classObject.name.parcelCaseName}Entity(${H}${classObject.name.camelCaseName}Entity);
 	${H}${classObject.name.camelCaseName}Dto->printData(${H}app);

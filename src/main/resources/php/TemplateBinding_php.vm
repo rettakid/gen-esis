@@ -4,9 +4,14 @@ require_once (${H}PROJ_PRESENTATION_DTO_ROOT.'${classObject.name.parcelCaseName}
 
 function bind${classObject.name.parcelCaseName}Dto(${H}${classObject.name.camelCaseName}Dto)	{
 	if (${H}${classObject.name.camelCaseName}Dto != null)	{
+	    global $entityManager;
 		${H}${classObject.name.camelCaseName}Entity = new ${classObject.name.parcelCaseName}Entity();
 #foreach(${variable} in ${classObject.variables})
+#if (${variable.type.variableTypeEnum} == 'REF')
+        ${H}${classObject.name.camelCaseName}Entity->set${variable.name.parcelCaseName}($entityManager->find("${variable.name.parcelCaseName}Entity", ${H}${classObject.name.camelCaseName}Dto->get${variable.name.parcelCaseName}()->get${variable.name.parcelCaseName}Id()));
+#else
         ${H}${classObject.name.camelCaseName}Entity->set${variable.name.parcelCaseName}(${H}${classObject.name.camelCaseName}Dto->get${variable.name.parcelCaseName}());
+#end
 #end
         return ${H}${classObject.name.camelCaseName}Entity;
     }	else {

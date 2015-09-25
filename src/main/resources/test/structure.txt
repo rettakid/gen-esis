@@ -15,15 +15,25 @@ root
 │     │  └─ dto
 │     │     └─ php_dto
 │     └─ services
-└─ java_root
+├─ java_root
+│  └─ za
+│     └─ co
+│        └─ rettakid
+│           ├─ persistance
+│           │  └─ entity
+│           │     └─ java_entity
+│           └─ common
+│              └─ dtos
+│                 └─ java_dto
+└─ android_root
    └─ za
       └─ co
          └─ rettakid
             ├─ network
-            │  └─ java_client
+            │  └─ android_client
             ├─ vo
-            │  └─ java_vo
+            │  └─ android_vo
             ├─ binding
-            │  └─ java_binding
+            │  └─ android_binding
             └─ models
-               └─ java_dto
+               └─ android_dto

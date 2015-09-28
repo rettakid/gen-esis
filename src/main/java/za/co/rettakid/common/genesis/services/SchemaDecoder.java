@@ -1,7 +1,5 @@
 package za.co.rettakid.common.genesis.services;
 
-import za.co.rettakid.common.genesis.common.Utilz;
-import za.co.rettakid.common.genesis.enums.NamingStd;
 import za.co.rettakid.common.genesis.enums.NullityTypeEnum;
 import za.co.rettakid.common.genesis.enums.VariableTypeEnum;
 import za.co.rettakid.common.genesis.pojo.ClassObject;
@@ -24,7 +22,7 @@ public class SchemaDecoder {
     private static final String varLenPattern = "\\n\\s+([A-Z_]+)\\s+([A-Z]+)\\((\\d+)\\)\\s+(NULL|NOT\\sNULL)";
     private static final String varPattern = "\\n\\s+([A-Z_]+)\\s+([A-Z]+)\\s+(NULL|NOT\\sNULL)";
     private static final String primaryKeyPattern = "\\n\\s+PRIMARY\\sKEY\\s+\\(([A-Z_]+)\\)";
-    private static final String referencePattern = "\\n\\s+FOREIGN\\sKEY\\s+\\(([A-Z_]+)\\)\\sREFERENCES\\s%s_([A-Z_]+)\\(([A-Z_]+)\\)";
+    private static final String referencePattern = "\\n\\s+FOREIGN\\sKEY\\s+\\(([A-Z_]+)\\)\\sREFERENCES\\s%s_([A-Z_]+)\\s+\\(([A-Z_]+)\\)";
 
     private GeneratedName databaseName;
     private List<ClassObject> classObjects;
@@ -88,8 +86,9 @@ public class SchemaDecoder {
     private void setReferencedObjects(String text,ClassObject curClassObject,List<ClassObject> classObjects)  {
         Matcher matcher = Pattern.compile(String.format(referencePattern,databaseName.getOriginalName())).matcher(text);
         while (matcher.find())  {
+            System.err.println(matcher.group(1) + " - " + matcher.group(2) + " - " + matcher.group(3));
             for (ClassObject classObject : classObjects) {
-                if (classObject.getName().getOriginalName().equals(matcher.group(2)))   {
+                if ((classObject.getName().getOriginalName()).equals(matcher.group(2)))   {
                     for (VariableObject variableObject : curClassObject.getVariables()) {
                         if (matcher.group(1).equals(variableObject.getName().getOriginalName()))    {
                             VariableType variableType = new VariableType(VariableTypeEnum.REF);
@@ -97,7 +96,11 @@ public class SchemaDecoder {
                             variableType.setPhpName(classObject.getName().getParcelCaseName());
                             variableObject.setType(variableType);
                             variableObject.setLength(null);
-                            variableObject.setName(new GeneratedName(Utilz.convertToUnderscoreCase(classObject.getName().getCamelCaseName(), NamingStd.CAMEL)));
+                            if (variableObject.getName().getOriginalName().contains("_ID") && variableObject.getName().getOriginalName().indexOf("_ID") == variableObject.getName().getOriginalName().length() - 3) {
+                                variableObject.setName(new GeneratedName(variableObject.getName().getOriginalName().substring(0,variableObject.getName().getOriginalName().indexOf("_ID"))));
+                            }   else    {
+                                throw new RuntimeException("Please add the _ID prefix to column " + variableObject.getName().getOriginalName() + " on table " + curClassObject.getName().getOriginalName());
+                            }
                             variableObject.setReference(classObject.getPrimaryKeyVar());
 
                             VariableObject reference = new VariableObject();

@@ -38,8 +38,12 @@ public class Genesis {
         phpFileGenerator.generatePhpXML();
 
         JavaFileGenerator javaFileGenerator = new JavaFileGenerator(schemaDecoder.getClassObjects(),structureGenerator.getGenDirList(),schemaDecoder.getDatabaseName());
+        javaFileGenerator.generateJavaBinding();
         javaFileGenerator.generateJavaDtos();
+        javaFileGenerator.generateJavaDaoImpls();
+        javaFileGenerator.generateJavaDaos();
         javaFileGenerator.generateJavaEntities();
+
     }
 
 }

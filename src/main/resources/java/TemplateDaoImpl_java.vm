@@ -1,0 +1,17 @@
+package ${classPackage};
+
+import org.springframework.stereotype.Service;
+import ${daoPackage}.${classObject.name.parcelCaseName}Dao;
+import ${entityPackage}.*;
+#foreach(${import} in ${imports})
+${import}
+#end
+
+@Service
+public class ${classObject.name.parcelCaseName}DaoImpl extends BaseDaoImpl<${classObject.name.parcelCaseName}Entity,${classObject.primaryKeyVar.type.javaName}> implements ${classObject.name.parcelCaseName}Dao   {
+
+    public Class getEntityClass() {
+        return ${classObject.name.parcelCaseName}Entity.class;
+    }
+
+}

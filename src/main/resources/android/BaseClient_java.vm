@@ -7,7 +7,6 @@ public class BaseClient {
 
     protected String baseUrl = "http://192.168.1.36:80/${databaseName.lowerCaseOrgName}/xml.php";
     protected RestTemplate restTemplate = new RestTemplate();
-    protected Context context;
 
     public BaseClient(String localUrl) {
         restTemplate.getMessageConverters().add(new SimpleXmlHttpMessageConverter());

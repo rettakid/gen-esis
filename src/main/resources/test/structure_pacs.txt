@@ -19,7 +19,7 @@ root
 │  └─ za
 │     └─ co
 │        └─ rettakid
-│           └─ meds 
+│           └─ carwash 
 │              ├─ persistence
 │              │  ├─ entity
 │              │  │  └─ java_entity
@@ -36,14 +36,11 @@ root
    └─ za
       └─ co
          └─ rettakid
-            └─ meds
-               ├─ network
-               │  └─ android_client
-               ├─ utils
-               │  └─ binding
-               │     └─ android_binding
-               └─ models
-                  ├─ vo
-                  │  └─ android_vo
-                  └─ dto
-                     └─ android_dto
+            ├─ network
+            │  └─ android_client
+            ├─ vo
+            │  └─ android_vo
+            ├─ binding
+            │  └─ android_binding
+            └─ models
+               └─ android_dto

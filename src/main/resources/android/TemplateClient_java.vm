@@ -1,12 +1,11 @@
 package ${classPackage};
 
-import android.content.Context;
 import ${dtoPackage}.*;
 
 public class ${classObject.name.parcelCaseName}Client extends BaseClient   {
 
-    public ${classObject.name.parcelCaseName}Client(Context context) {
-        super("/${classObject.name.lowerCaseName}s",context);
+    public ${classObject.name.parcelCaseName}Client() {
+        super("/${classObject.name.lowerCaseName}s");
     }
 
     public ${classObject.name.parcelCaseName}ListDto get${classObject.name.parcelCaseName}s()  {

@@ -1,0 +1,10 @@
+package ${classPackage};
+
+import ${entityPackage}.*;
+#foreach(${import} in ${imports})
+${import}
+#end
+
+public interface ${classObject.name.parcelCaseName}Dao extends BaseDao<${classObject.name.parcelCaseName}Entity,${classObject.primaryKeyVar.type.javaName}>    {
+
+}

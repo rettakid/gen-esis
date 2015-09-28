@@ -1,7 +1,7 @@
 <?php
 
 require_once (${H}PROJ_PRESENTATION_DTO_ROOT.'${classObject.name.parcelCaseName}Dto.php');
-require_once (${H}PROJ_PERSISTANCE_ENTITY_ROOT.'${classObject.name.parcelCaseName}Entity.php');
+require_once (${H}PROJ_PERSISTENCE_ENTITY_ROOT.'${classObject.name.parcelCaseName}Entity.php');
 require_once (${H}PROJ_COMMON_BINDING_ROOT.'${classObject.name.parcelCaseName}Binding.php');
 
 ${H}app->get('/${classObject.name.lowerCaseName}s', function () use (${H}app) {

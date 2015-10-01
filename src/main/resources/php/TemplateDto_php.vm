@@ -3,7 +3,7 @@
 require_once ($PROJ_PRESENTATION_DTO_ROOT.'Dto.php');
 #foreach(${variable} in ${classObject.variables})
 #if(${variable.type.variableTypeEnum} == 'REF')
-require_once ($PROJ_PRESENTATION_DTO_ROOT.'${variable.name.parcelCaseName}Dto.php');
+require_once ($PROJ_PRESENTATION_DTO_ROOT.'${variable.type.javaName}Dto.php');
 #end
 #end
 

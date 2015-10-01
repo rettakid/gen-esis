@@ -11,7 +11,7 @@ public class Bind${classObject.name.parcelCaseName} {
             ${classObject.name.camelCaseName}Vo = new ${classObject.name.parcelCaseName}Vo();
 #foreach(${variable} in ${classObject.variables})
 #if (${variable.type.variableTypeEnum} == 'REF')
-            ${classObject.name.camelCaseName}Vo.setReal${variable.name.parcelCaseName}(Bind${variable.name.parcelCaseName}.bind${variable.name.parcelCaseName}(${classObject.name.camelCaseName}Dto.get${variable.name.parcelCaseName}()));
+            ${classObject.name.camelCaseName}Vo.setReal${variable.name.parcelCaseName}(Bind${variable.type.javaName}.bind${variable.type.javaName}(${classObject.name.camelCaseName}Dto.get${variable.name.parcelCaseName}()));
 #else
             ${classObject.name.camelCaseName}Vo.setReal${variable.name.parcelCaseName}(${classObject.name.camelCaseName}Dto.get${variable.name.parcelCaseName}());
 #end
@@ -26,7 +26,7 @@ public class Bind${classObject.name.parcelCaseName} {
             ${classObject.name.camelCaseName}Dto = new ${classObject.name.parcelCaseName}Dto();
 #foreach(${variable} in ${classObject.variables})
 #if (${variable.type.variableTypeEnum} == 'REF')
-            ${classObject.name.camelCaseName}Dto.set${variable.name.parcelCaseName}(Bind${variable.name.parcelCaseName}.bind${variable.name.parcelCaseName}(${classObject.name.camelCaseName}Vo.getReal${variable.name.parcelCaseName}()));
+            ${classObject.name.camelCaseName}Dto.set${variable.name.parcelCaseName}(Bind${variable.type.javaName}.bind${variable.type.javaName}(${classObject.name.camelCaseName}Vo.getReal${variable.name.parcelCaseName}()));
 #else
             ${classObject.name.camelCaseName}Dto.set${variable.name.parcelCaseName}(${classObject.name.camelCaseName}Vo.getReal${variable.name.parcelCaseName}());
 #end

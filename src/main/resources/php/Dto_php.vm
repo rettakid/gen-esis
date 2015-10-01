@@ -65,7 +65,7 @@ class Dto {
 				${H}methodValue = ${H}this->${H}methodName();
 				${H}displayName = strtolower(${H}displayName);
 				if (${H}methodValue == null)	{
-					echo "<${H}displayName>null</${H}displayName>";
+					
 				} else if (is_array(${H}methodValue)) {
 					echo "<${H}displayName>";
 					foreach (${H}methodValue as ${H}item) {
@@ -76,9 +76,46 @@ class Dto {
 					${H}displayMethodValue = ${H}methodValue->format('Y-m-d H:i:s.0 T');
 					echo "<${H}displayName>${H}displayMethodValue</${H}displayName>";
 				} elseif (${H}methodValue instanceof Dto)	{
-					${H}methodValue->printXml(${H}app);
+					${H}methodValue->printXmlData(${H}app,${H}displayName."dto");
 				}  else 	{
-					echo "<${H}displayName>${H}methodValue</${H}displayName>";
+    				echo "<${H}displayName>".htmlspecialchars(${H}methodValue, ENT_XML1)."</${H}displayName>";
+				}
+			}
+			
+		}
+		echo "</${H}displayClassName>";
+	}
+
+	public function printXmlData(${H}app,${H}displayClassName)	{
+		${H}res = ${H}app->response();
+		${H}res['Content-Type'] = 'text/xml';
+
+		${H}reflect = new \ReflectionClass(${H}this);
+		${H}className = ${H}reflect->getShortName();
+		${H}classVars = ${H}reflect->getMethods();
+
+		echo "<${H}displayClassName>";
+		foreach (${H}classVars as ${H}classVar)	{
+			${H}methodName = ${H}classVar->getName();
+			if (substr(${H}methodName,0,3) == "get")	{
+				${H}displayName = substr(${H}methodName,3,strlen(${H}methodName) - 3);
+				${H}methodValue = ${H}this->${H}methodName();
+				${H}displayName = strtolower(${H}displayName);
+				if (${H}methodValue == null)	{
+					
+				} else if (is_array(${H}methodValue)) {
+					echo "<${H}displayName>";
+					foreach (${H}methodValue as ${H}item) {
+						${H}item->printXml(${H}app);
+					}
+					echo "</${H}displayName>";
+				} elseif (${H}methodValue instanceof DateTime)	{
+					${H}displayMethodValue = ${H}methodValue->format('Y-m-d H:i:s.0 T');
+					echo "<${H}displayName>${H}displayMethodValue</${H}displayName>";
+				} elseif (${H}methodValue instanceof Dto)	{
+					${H}methodValue->printXmlData(${H}app,${H}displayName."dto");
+				}  else 	{
+    				echo "<${H}displayName>".htmlspecialchars(${H}methodValue, ENT_XML1)."</${H}displayName>";
 				}
 			}
 			

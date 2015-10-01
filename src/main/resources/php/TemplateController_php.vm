@@ -63,9 +63,9 @@ ${H}app->delete('/${classObject.name.lowerCaseName}s/:id', function (${H}id) use
 /*Referances*/
 #foreach(${reference} in ${classObject.references})
 
-${H}app->get('/${classObject.name.lowerCaseName}s/:id/${reference.name.lowerCaseName}s', function (${H}id) use (${H}app) {
+${H}app->get('/${classObject.name.lowerCaseName}s/:id/${reference.name.lowerCaseName}s/${reference.refName.lowerCaseName}s', function (${H}id) use (${H}app) {
 	global ${H}entityManager;
-   	${H}${reference.name.camelCaseName}Entities = ${H}entityManager->getRepository("${reference.name.parcelCaseName}Entity")->findBy(array('${classObject.name.lowerCaseName}'=>$id));
+   	${H}${reference.name.camelCaseName}Entities = ${H}entityManager->getRepository("${reference.name.parcelCaseName}Entity")->findBy(array('${reference.refName.lowerCaseName}'=>$id));
     ${H}${reference.name.camelCaseName} = bind${reference.name.parcelCaseName}EntityArray(${H}${reference.name.camelCaseName}Entities);
     ${H}${reference.name.camelCaseName}->printData($app);
 });

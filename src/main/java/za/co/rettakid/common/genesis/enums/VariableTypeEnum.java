@@ -11,7 +11,7 @@ public enum VariableTypeEnum {
     BOOLEAN("boolean","Boolean",null),
     FLOAT("float","Float",null),
     DATE("date","Date","import java.util.Date;"),
-    TIME("date","Date","import java.util.Date;"),
+    TIME("time","Date","import java.util.Date;"),
     DATETIME("datetime","Date","import java.util.Date;"),
     BLOB("string","String",null),
     REF("string","EMPTY",null);

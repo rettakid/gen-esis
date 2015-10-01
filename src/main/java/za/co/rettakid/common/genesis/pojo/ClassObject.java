@@ -6,12 +6,13 @@ import java.util.List;
 /**
  * Created by lwazi8 on 26/08/2015.
  */
-public class ClassObject {
+public class ClassObject implements Cloneable {
 
     private GeneratedName name;
     private VariableObject primaryKeyVar;
     private List<VariableObject> variables = new ArrayList<>(10);
     private List<ClassObject> references = new ArrayList<>(10);
+    private GeneratedName refName;
 
     public GeneratedName getName() {
         return name;
@@ -53,4 +54,16 @@ public class ClassObject {
         this.references.addAll(references);
     }
 
+    public GeneratedName getRefName() {
+        return refName;
+    }
+
+    public void setRefName(GeneratedName refName) {
+        this.refName = refName;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

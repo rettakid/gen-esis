@@ -30,7 +30,7 @@ public class ${classObject.name.parcelCaseName}Vo extends BaseObservable   {
     public ${type} get${variable.name.parcelCaseName}()   {
 #if (${variable.type.variableTypeEnum} == 'INT' || ${variable.type.variableTypeEnum} == 'BIGINT' || ${variable.type.variableTypeEnum} == 'BOOLEAN' || ${variable.type.variableTypeEnum} == 'FLOAT')
         return String.valueOf(this.${variable.name.camelCaseName});
-#elseif (${variable.type.variableTypeEnum} == 'DATE' || ${variable.type.variableTypeEnum} == 'DATETIME')
+#elseif (${variable.type.variableTypeEnum} == 'TIME' || ${variable.type.variableTypeEnum} == 'DATE' || ${variable.type.variableTypeEnum} == 'DATETIME')
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat();
         return simpleDateFormat.format(this.${variable.name.camelCaseName});
 #elseif (${variable.type.variableTypeEnum} == 'REF')
@@ -49,7 +49,7 @@ public class ${classObject.name.parcelCaseName}Vo extends BaseObservable   {
         this.${variable.name.camelCaseName} = Boolean.parseBoolean(${variable.name.camelCaseName});
 #elseif (${variable.type.variableTypeEnum} == 'FLOAT')
         this.${variable.name.camelCaseName} = Float.parseFloat(${variable.name.camelCaseName});
-#elseif (${variable.type.variableTypeEnum} == 'DATE' || ${variable.type.variableTypeEnum} == 'DATETIME')
+#elseif (${variable.type.variableTypeEnum} == 'TIME' || ${variable.type.variableTypeEnum} == 'DATE' || ${variable.type.variableTypeEnum} == 'DATETIME')
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat();
         try {
             this.${variable.name.camelCaseName} = simpleDateFormat.parse(${variable.name.camelCaseName});

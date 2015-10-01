@@ -44,8 +44,8 @@ public class SchemaDecoder {
 
             classObject.addAllVariables(getVariablesWithOutLength(matchTables.group(2), classObject));
             classObject.addAllVariables(getVariablesWithLength(matchTables.group(2), classObject));
-            setReferencedObjects(matchTables.group(2), classObject, classObjects);
             classObject.setPrimaryKeyVar(getPrimaryKey(matchTables.group(2), classObject.getVariables()));
+            setReferencedObjects(matchTables.group(2), classObject, classObjects);
 
             classObjects.add(classObject);
         }
@@ -103,12 +103,16 @@ public class SchemaDecoder {
                             }
                             variableObject.setReference(classObject.getPrimaryKeyVar());
 
-                            VariableObject reference = new VariableObject();
-                            reference.setClassObject(classObject);
-                            reference.setName(classObject.getName());
                             for (ClassObject refClassObject : classObjects) {
                                 if (classObject.getName().getOriginalName().equals(refClassObject.getName().getOriginalName())) {
-                                    refClassObject.addReference(curClassObject);
+                                    try {
+                                        ClassObject refClass = (ClassObject)curClassObject.clone();
+                                        refClass.setRefName(new GeneratedName(variableObject.getName().getOriginalName()));
+                                        refClassObject.addReference(refClass);
+                                    } catch (CloneNotSupportedException e) {
+                                        e.printStackTrace();
+                                    }
+
                                 }
                             }
                             break;

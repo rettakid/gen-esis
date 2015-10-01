@@ -40,8 +40,8 @@ public class ${classObject.name.parcelCaseName}Client extends BaseClient   {
 
 #foreach(${reference} in ${classObject.references})
 
-    public ${reference.name.parcelCaseName}ListDto get${reference.name.parcelCaseName}s(${reference.primaryKeyVar.type.javaName} ${reference.primaryKeyVar.name.camelCaseName})  {
-        String url = createUrl("/{id}/${reference.name.lowerCaseName}s");
+    public ${reference.name.parcelCaseName}ListDto get${reference.name.parcelCaseName}${reference.refName.parcelCaseName}s(${reference.primaryKeyVar.type.javaName} ${reference.primaryKeyVar.name.camelCaseName})  {
+        String url = createUrl("/{id}/${reference.name.lowerCaseName}s/${reference.refName.lowerCaseName}s");
         return getRestTemplate().getForObject(url, ${reference.name.parcelCaseName}ListDto.class,${reference.primaryKeyVar.name.camelCaseName});
     }
 #end

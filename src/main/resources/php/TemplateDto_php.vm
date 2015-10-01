@@ -3,7 +3,7 @@
 require_once ($PROJ_PRESENTATION_DTO_ROOT.'Dto.php');
 #foreach(${variable} in ${classObject.variables})
 #if(${variable.type.variableTypeEnum} == 'REF')
-require_once ($PROJ_PRESENTATION_DTO_ROOT.'${variable.name.parcelCaseName}Dto.php');
+require_once ($PROJ_PRESENTATION_DTO_ROOT.'${variable.type.javaName}Dto.php');
 #end
 #end
 
@@ -16,8 +16,8 @@ class ${classObject.name.parcelCaseName}Dto extends Dto 	{
 	public function __construct()	{
 #foreach(${variable} in ${classObject.variables})
 #if(${variable.type.variableTypeEnum} == 'REF')
-		$this->${variable.name.camelCaseName} = new ${variable.name.parcelCaseName}Dto();
-#elseif(${variable.type.variableTypeEnum} == 'DATE' || ${variable.type.variableTypeEnum} == 'DATETIME')
+		$this->${variable.name.camelCaseName} = new ${variable.type.javaName}Dto();
+#elseif(${variable.type.variableTypeEnum} == 'TIME' || ${variable.type.variableTypeEnum} == 'DATE' || ${variable.type.variableTypeEnum} == 'DATETIME')
 		$this->${variable.name.camelCaseName} = new \DateTime("now");
 #end
 #end

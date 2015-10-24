@@ -23,15 +23,20 @@ root
 │              ├─ persistence
 │              │  ├─ entity
 │              │  │  └─ java_entity
-│              │  ├─ dao
-│              │  │  ├─ java_dao
-│              │  │  └─ impl
-│              │  │     └─ java_dao_impl
-│              │  └─ binding
-│              │     └─ java_binding
-│              └─ common
-│                 └─ dto
-│                    └─ java_dto
+│              │  └─ dao
+│              │     ├─ java_dao
+│              │     └─ impl
+│              │        └─ java_dao_impl
+│              │
+│              ├─ common
+│              │  └─ dto
+│              │     └─ java_dto
+│              └─ services
+│                 ├─ java_service
+│                 ├─ impl
+│                 │  └─ java_service_impl
+│                 └─ binding
+│                    └─ java_binding
 └─ android_root
    └─ za
       └─ co

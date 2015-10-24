@@ -39,6 +39,8 @@ public class Genesis {
 
         JavaFileGenerator javaFileGenerator = new JavaFileGenerator(schemaDecoder.getClassObjects(),structureGenerator.getGenDirList(),schemaDecoder.getDatabaseName());
         javaFileGenerator.generateJavaBinding();
+        javaFileGenerator.generateJavaServiceImpls();
+        javaFileGenerator.generateJavaServices();
         javaFileGenerator.generateJavaDtos();
         javaFileGenerator.generateJavaDaoImpls();
         javaFileGenerator.generateJavaDaos();

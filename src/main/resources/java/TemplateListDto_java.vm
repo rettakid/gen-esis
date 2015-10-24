@@ -1,0 +1,25 @@
+package ${classPackage};
+
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlElement;
+import java.util.ArrayList;
+import java.util.List;
+#foreach(${import} in ${imports})
+${import}
+#end
+
+@XmlRootElement(name = "${classObject.name.lowerCaseName}listdto")
+public class ${classObject.name.parcelCaseName}ListDto   {
+
+    @XmlElementWrapper(name = "${classObject.name.lowerCaseName}s")
+    @XmlElement(name = "${classObject.name.lowerCaseName}dto",type = ${classObject.name.parcelCaseName}Dto.class)
+    private List<${classObject.name.parcelCaseName}Dto> ${classObject.name.camelCaseName}s = new ArrayList<${classObject.name.parcelCaseName}Dto>();
+
+    public List<${classObject.name.parcelCaseName}Dto> get${classObject.name.parcelCaseName}List()   {
+        return this.${classObject.name.camelCaseName}s;
+    }
+
+    public void add${classObject.name.parcelCaseName}List(List<${classObject.name.parcelCaseName}Dto> ${classObject.name.camelCaseName}s)   {
+        this.${classObject.name.camelCaseName}s.addAll(${classObject.name.camelCaseName}s);
+    }
+}

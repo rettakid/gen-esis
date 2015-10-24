@@ -1,8 +1,6 @@
 package ${classPackage};
 
 import org.springframework.stereotype.Service;
-import ${daoPackage}.${classObject.name.parcelCaseName}Dao;
-import ${entityPackage}.*;
 #foreach(${import} in ${imports})
 ${import}
 #end

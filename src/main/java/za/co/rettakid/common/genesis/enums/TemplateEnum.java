@@ -8,14 +8,17 @@ public enum TemplateEnum {
     ANDROID_BASE_CLIENT("android\\BaseClient_java.vm"),
     ANDROID_CLIENT("android\\TemplateClient_java.vm"),
     ANDROID_DTO("android\\TemplateDto_java.vm"),
+    ANDROID_LIST_DTO("android\\TemplateListDto_java.vm"),
     ANDROID_VO("android\\TemplateVo_java.vm"),
     ANDROID_BINDING("android\\TemplateBind_java.vm"),
-    ANDROID_LIST_DTO("android\\TemplateListDto_java.vm"),
 
     JAVA_DTO("java\\TemplateDto_java.vm"),
+    JAVA_DTO_LIST("java\\TemplateListDto_java.vm"),
     JAVA_ENTITY("java\\TemplateEntity_java.vm"),
     JAVA_DAO("java\\TemplateDao_java.vm"),
     JAVA_DAO_IMPL("java\\TemplateDaoImpl_java.vm"),
+    JAVA_SERVICE("java\\TemplateService_java.vm"),
+    JAVA_SERVICE_IMPL("java\\TemplateServiceImpl_java.vm"),
     JAVA_BINDING("java\\TemplateBind_java.vm"),
 
     PHP_BINDING("php\\TemplateBinding_php.vm"),

@@ -1,6 +1,5 @@
 package ${classPackage};
 
-import ${entityPackage}.*;
 #foreach(${import} in ${imports})
 ${import}
 #end

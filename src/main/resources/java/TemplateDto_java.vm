@@ -6,30 +6,35 @@ import javax.xml.bind.annotation.XmlElement;
 ${import}
 #end
 
-@XmlRootElement
+@XmlRootElement(name = "${classObject.name.lowerCaseName}dto")
 public class ${classObject.name.parcelCaseName}Dto    {
 
 #foreach(${variable} in ${classObject.variables})
 #if(${variable.type.variableTypeEnum} == 'REF')
-    @XmlElement(name = "${variable.name.lowerCaseName}dto")
     private ${variable.type.javaName}Dto ${variable.name.camelCaseName};
 #else
-    @XmlElement
     private ${variable.type.javaName} ${variable.name.camelCaseName};
 #end
 #end
-
 #foreach(${variable} in ${classObject.variables})
+#if(${variable.isPk} == true || ${variable.nullity} == 'NULL')
+    #set($required = ' , required = false')
+#else
+    #set($required = '')
+#end
 #if(${variable.type.variableTypeEnum} == 'REF')
     #set($type = ${variable.type.javaName} + 'Dto')
+    #set($name = 'name = "' + ${variable.name.lowerCaseName} + 'dto"')
 #else
     #set($type = ${variable.type.javaName})
+    #set($name = 'name = "' + ${variable.name.lowerCaseName} + '"')
 #end
 
     public ${type} get${variable.name.parcelCaseName}()   {
         return this.${variable.name.camelCaseName};
     }
 
+    @XmlElement(${name}${required})
     public void set${variable.name.parcelCaseName}(${type} ${variable.name.camelCaseName})   {
         this.${variable.name.camelCaseName} = ${variable.name.camelCaseName};
     }

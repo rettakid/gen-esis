@@ -1,7 +1,10 @@
 package ${classPackage};
 
-import ${entityPackage}.*;
-import ${dtoPackage}.*;
+import java.util.ArrayList;
+import java.util.List;
+#foreach(${import} in ${imports})
+${import}
+#end
 
 public class Bind${classObject.name.parcelCaseName} {
 
@@ -11,7 +14,7 @@ public class Bind${classObject.name.parcelCaseName} {
             ${classObject.name.camelCaseName}Entity = new ${classObject.name.parcelCaseName}Entity();
 #foreach(${variable} in ${classObject.variables})
 #if (${variable.type.variableTypeEnum} == 'REF')
-            ${classObject.name.camelCaseName}Entity.set${variable.name.parcelCaseName}Entity(Bind${variable.name.parcelCaseName}.bind${variable.name.parcelCaseName}(${classObject.name.camelCaseName}Dto.get${variable.name.parcelCaseName}()));
+            ${classObject.name.camelCaseName}Entity.set${variable.name.parcelCaseName}Entity(Bind${variable.type.javaName}.bind${variable.type.javaName}(${classObject.name.camelCaseName}Dto.get${variable.name.parcelCaseName}()));
 #else
             ${classObject.name.camelCaseName}Entity.set${variable.name.parcelCaseName}(${classObject.name.camelCaseName}Dto.get${variable.name.parcelCaseName}());
 #end
@@ -20,19 +23,35 @@ public class Bind${classObject.name.parcelCaseName} {
         return ${classObject.name.camelCaseName}Entity;
     }
 
+    public static List<${classObject.name.parcelCaseName}Entity> bind${classObject.name.parcelCaseName}DtoList(List<${classObject.name.parcelCaseName}Dto> ${classObject.name.camelCaseName}Dtos) {
+    List<${classObject.name.parcelCaseName}Entity> ${classObject.name.camelCaseName}Entities = new ArrayList<${classObject.name.parcelCaseName}Entity>();
+        for (${classObject.name.parcelCaseName}Dto ${classObject.name.camelCaseName}Dto : ${classObject.name.camelCaseName}Dtos) {
+            ${classObject.name.camelCaseName}Entities.add(bind${classObject.name.parcelCaseName}(${classObject.name.camelCaseName}Dto));
+        }
+        return ${classObject.name.camelCaseName}Entities;
+    }
+
     public static ${classObject.name.parcelCaseName}Dto bind${classObject.name.parcelCaseName}(${classObject.name.parcelCaseName}Entity ${classObject.name.camelCaseName}Entity) {
         ${classObject.name.parcelCaseName}Dto ${classObject.name.camelCaseName}Dto = null;
         if (${classObject.name.camelCaseName}Entity != null)    {
             ${classObject.name.camelCaseName}Dto = new ${classObject.name.parcelCaseName}Dto();
 #foreach(${variable} in ${classObject.variables})
 #if (${variable.type.variableTypeEnum} == 'REF')
-            ${classObject.name.camelCaseName}Dto.set${variable.name.parcelCaseName}Dto(Bind${variable.name.parcelCaseName}.bind${variable.name.parcelCaseName}(${classObject.name.camelCaseName}Entity.get${variable.name.parcelCaseName}()));
+            ${classObject.name.camelCaseName}Dto.set${variable.name.parcelCaseName}(Bind${variable.type.javaName}.bind${variable.type.javaName}(${classObject.name.camelCaseName}Entity.get${variable.name.parcelCaseName}Entity()));
 #else
             ${classObject.name.camelCaseName}Dto.set${variable.name.parcelCaseName}(${classObject.name.camelCaseName}Entity.get${variable.name.parcelCaseName}());
 #end
 #end
         }
         return ${classObject.name.camelCaseName}Dto;
+    }
+
+    public static List<${classObject.name.parcelCaseName}Dto> bind${classObject.name.parcelCaseName}EntityList(List<${classObject.name.parcelCaseName}Entity> ${classObject.name.camelCaseName}Entitys) {
+        List<${classObject.name.parcelCaseName}Dto> ${classObject.name.camelCaseName}Dtos = new ArrayList<${classObject.name.parcelCaseName}Dto>();
+        for (${classObject.name.parcelCaseName}Entity ${classObject.name.camelCaseName}Entity : ${classObject.name.camelCaseName}Entitys) {
+            ${classObject.name.camelCaseName}Dtos.add(bind${classObject.name.parcelCaseName}(${classObject.name.camelCaseName}Entity));
+        }
+        return ${classObject.name.camelCaseName}Dtos;
     }
 
 }

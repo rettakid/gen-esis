@@ -1,7 +1,9 @@
 package za.co.rettakid.common.genesis.common;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import za.co.rettakid.common.genesis.enums.NamingStd;
 
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,9 +33,38 @@ public class Utilz {
         }
         Matcher matchDbName = Pattern.compile("([A-Z])").matcher(string);
         while (matchDbName.find()) {
-            string = string.replace(matchDbName.group(),"_" + matchDbName.group().toLowerCase());
+            string = string.replace(matchDbName.group(), "_" + matchDbName.group().toLowerCase());
         }
         return string.toUpperCase();
+    }
+
+    /*TODO refractor into more methods*/
+    public static Collection<String> addAll(Collection<String> array, String... arrayString) {
+        array.addAll(Arrays.asList(arrayString));
+        return array;
+    }
+
+    /*TODO refractor into more methods*/
+    public static Set<String> createImports(Set<String> imports, String... arrayString) {
+        imports.addAll(Arrays.asList(arrayString));
+        Set<String> returnImports = new HashSet<>();
+        for (String anImport : imports) {
+            if (!anImport.contains("import "))   {
+                anImport = "import " + anImport;
+                if (anImport.substring(anImport.length() - 1).equals("."))   {
+                    anImport = anImport + "*;";
+                } else  {
+                    anImport = anImport + ".*;";
+                }
+            }
+
+            if (!anImport.contains(";"))   {
+                anImport += ";";
+            }
+            returnImports.add(anImport);
+        }
+        imports = returnImports;
+        return imports;
     }
 
 }

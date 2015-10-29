@@ -20,10 +20,10 @@ public class JavaFileGenerator extends BaseFileGenerator {
     }
 
     public void generateJavaBinding() throws Exception {
-        String classPackage = getPackage(GenesisConstants.CON_DIR_JAVA_BINDING, GenesisConstants.CON_DIR_JAVA_ROOT);
+        String classPackage = getPackage(GenesisConstants.CON_DIR_JAVA_ENTITY_BINDING, GenesisConstants.CON_DIR_JAVA_ROOT);
         String entityPackage = getPackage(GenesisConstants.CON_DIR_JAVA_ENTITY, GenesisConstants.CON_DIR_JAVA_ROOT);
         String dtoPackage = getPackage(GenesisConstants.CON_DIR_JAVA_DTO, GenesisConstants.CON_DIR_JAVA_ROOT);
-        removePostFixFromDirMap(GenesisConstants.CON_DIR_JAVA_BINDING);
+        removePostFixFromDirMap(GenesisConstants.CON_DIR_JAVA_ENTITY_BINDING);
         for (ClassObject classObject : getClassObjects()) {
             VelocityContext context = new VelocityContext();
             Set<String> imports = new HashSet<>();
@@ -31,7 +31,7 @@ public class JavaFileGenerator extends BaseFileGenerator {
             context.put("imports", imports);
             context.put("classPackage", classPackage);
             context.put("classObject", classObject);
-            generateFile(getGenDirList().get(GenesisConstants.CON_DIR_JAVA_BINDING) + "Bind" + classObject.getName().getParcelCaseName() + ".java", TemplateEnum.JAVA_BINDING.getLocation(), context);
+            generateFile(getGenDirList().get(GenesisConstants.CON_DIR_JAVA_ENTITY_BINDING) + "Bind" + classObject.getName().getParcelCaseName() + ".java", TemplateEnum.JAVA_ENTITY_BINDING.getLocation(), context);
         }
     }
 
@@ -138,7 +138,7 @@ public class JavaFileGenerator extends BaseFileGenerator {
         String dtoPackage = getPackage(GenesisConstants.CON_DIR_JAVA_DTO, GenesisConstants.CON_DIR_JAVA_ROOT);
         String daoPackage = getPackage(GenesisConstants.CON_DIR_JAVA_DAO, GenesisConstants.CON_DIR_JAVA_ROOT);
         String servicePackage = getPackage(GenesisConstants.CON_DIR_JAVA_SERVICES, GenesisConstants.CON_DIR_JAVA_ROOT);
-        String bindingPackage = getPackage(GenesisConstants.CON_DIR_JAVA_BINDING, GenesisConstants.CON_DIR_JAVA_ROOT);
+        String bindingPackage = getPackage(GenesisConstants.CON_DIR_JAVA_ENTITY_BINDING, GenesisConstants.CON_DIR_JAVA_ROOT);
         String classPackage = getPackage(GenesisConstants.CON_DIR_JAVA_SERVICES_IMPL, GenesisConstants.CON_DIR_JAVA_ROOT);
         removePostFixFromDirMap(GenesisConstants.CON_DIR_JAVA_SERVICES_IMPL);
         for (ClassObject classObject : getClassObjects()) {

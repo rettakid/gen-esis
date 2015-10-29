@@ -27,16 +27,20 @@ root
 │              │     ├─ java_dao
 │              │     └─ impl
 │              │        └─ java_dao_impl
-│              │
 │              ├─ common
 │              │  └─ dto
 │              │     └─ java_dto
+│              ├─ presentation
+│              │  ├─ vo
+│              │  │  └─ java_vo
+│              │  └─ binding
+│              │     └─ java_vo_binding
 │              └─ services
 │                 ├─ java_service
 │                 ├─ impl
 │                 │  └─ java_service_impl
 │                 └─ binding
-│                    └─ java_binding
+│                    └─ java_entity_binding
 └─ android_root
    └─ za
       └─ co

@@ -22,7 +22,6 @@ public enum TemplateEnum {
     JAVA_ENTITY_BINDING("java\\TemplateEntityBind_java.vm"),
     JAVA_VO("java\\TemplateVo_java.vm"),
     JAVA_VO_BINDING("java\\TemplateVoBind_java.vm"),
-
     PHP_BINDING("php\\TemplateBinding_php.vm"),
     PHP_CONFIG("php\\config_php.vm"),
     PHP_BOOTSTRAP("php\\bootstrap_php.vm"),

@@ -32,6 +32,7 @@ public class JavaFileGenerator extends BaseFileGenerator {
             context.put("classPackage", classPackage);
             context.put("classObject", classObject);
             generateFile(getGenDirList().get(GenesisConstants.CON_DIR_JAVA_ENTITY_BINDING) + "Bind" + classObject.getName().getParcelCaseName() + ".java", TemplateEnum.JAVA_ENTITY_BINDING.getLocation(), context);
+
         }
     }
 

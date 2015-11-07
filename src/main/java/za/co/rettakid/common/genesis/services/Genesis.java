@@ -9,17 +9,12 @@ import za.co.rettakid.common.genesis.services.generetor.PhpFileGenerator;
  */
 public class Genesis {
 
-    private static String schemeFilePath = "src\\main\\resources\\test\\scheme.sql";
-    private static String structureFilePath = "src\\main\\resources\\test\\structure.txt";
-    private static String javaPackageDto = "za.co.rettakid";
-    private static String dbName;
-
     public static void main(String[] args) throws Exception {
         StructureGenerator structureGenerator = new StructureGenerator();
-        structureGenerator.generatorStructure(structureFilePath);
+        structureGenerator.generatorStructure(args[1]);
 
         SchemaDecoder schemaDecoder = new SchemaDecoder();
-        schemaDecoder.decodeScheme(schemeFilePath);
+        schemaDecoder.decodeScheme(args[0]);
 
         AndroidFileGenerator androidFileGenerator = new AndroidFileGenerator(schemaDecoder.getClassObjects(),structureGenerator.getGenDirList(),schemaDecoder.getDatabaseName());
         androidFileGenerator.generateAndroidBaseClient();

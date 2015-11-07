@@ -12,19 +12,17 @@ public class ${classObject.name.parcelCaseName}Entity    {
 #foreach(${variable} in ${classObject.variables})
 #if(${variable.type.variableTypeEnum} == 'REF')
     #set($variableType = ${variable.type.javaName} + 'Entity')
-    #set($variableName = ${variable.name.camelCaseName} + 'Entity')
 #else
     #set($variableType = ${variable.type.javaName})
-    #set($variableName = ${variable.name.camelCaseName})
 #end
-    private ${variableType} ${variableName};
+    private ${variableType} ${variable.name.camelCaseName};
 #end
 
 #foreach(${variable} in ${classObject.variables})
 #if (${variable.isPk})
     #set($id = '@Id
     ')
-    #set($autoGen = '@GeneratedValue
+    #set($autoGen = '@GeneratedValue(strategy = GenerationType.IDENTITY)
     ')
 #else
     #set($id = '')
@@ -42,25 +40,21 @@ public class ${classObject.name.parcelCaseName}Entity    {
 #end
 #if (${variable.type.variableTypeEnum} == 'REF')
     #set($variableType = "${variable.type.javaName}Entity")
-    #set($variableNameCamel = "${variable.name.camelCaseName}Entity")
-    #set($variableNameParcel = "${variable.name.parcelCaseName}Entity")
     #set($column = '@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="' + ${variable.orgName.originalName} + '", referencedColumnName="' + ${variable.reference.name.originalName} + '")')
 #else
     #set($variableType = "${variable.type.javaName}")
-    #set($variableNameCamel = "${variable.name.camelCaseName}")
-    #set($variableNameParcel = "${variable.name.parcelCaseName}")
     #set($column = '@Basic
     @Column(name="' + ${variable.orgName.originalName} + '"' + ${length} + ${nullity} + ')')
 #end
 
     ${id}${autoGen}${column}
-    public ${variableType} get${variableNameParcel}()   {
-        return this.${variableNameCamel};
+    public ${variableType} get${variable.name.parcelCaseName}()   {
+        return this.${variable.name.camelCaseName};
     }
 
-    public void set${variableNameParcel}(${variableType} ${variableNameCamel})   {
-        this.${variableNameCamel} = ${variableNameCamel};
+    public void set${variable.name.parcelCaseName}(${variableType} ${variable.name.camelCaseName})   {
+        this.${variable.name.camelCaseName} = ${variable.name.camelCaseName};
     }
 #end
 

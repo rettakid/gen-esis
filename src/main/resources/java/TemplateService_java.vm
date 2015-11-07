@@ -9,7 +9,6 @@ public interface ${classObject.name.parcelCaseName}Service    {
     ${classObject.name.parcelCaseName}ListDto get${classObject.name.parcelCaseName}s();
     ${classObject.name.parcelCaseName}Dto get${classObject.name.parcelCaseName}s(${classObject.primaryKeyVar.type.javaName} ${classObject.primaryKeyVar.name.camelCaseName});
     void post${classObject.name.parcelCaseName}s(${classObject.name.parcelCaseName}Dto ${classObject.name.camelCaseName}Dto);
-    void post${classObject.name.parcelCaseName}s(${classObject.name.parcelCaseName}ListDto ${classObject.name.camelCaseName}ListDto);
     void put${classObject.name.parcelCaseName}s(${classObject.name.parcelCaseName}Dto ${classObject.name.camelCaseName}Dto);
     void delete${classObject.name.parcelCaseName}s(${classObject.primaryKeyVar.type.javaName} ${classObject.primaryKeyVar.name.camelCaseName});
 

@@ -19,11 +19,11 @@ public class JavaFileGenerator extends BaseFileGenerator {
         super(classObjects, genDirList, databaseName);
     }
 
-    public void generateJavaBinding() throws Exception {
-        String classPackage = getPackage(GenesisConstants.CON_DIR_JAVA_BINDING, GenesisConstants.CON_DIR_JAVA_ROOT);
+    public void generateJavaEntityBinding() throws Exception {
+        String classPackage = getPackage(GenesisConstants.CON_DIR_JAVA_ENTITY_BINDING, GenesisConstants.CON_DIR_JAVA_ROOT);
         String entityPackage = getPackage(GenesisConstants.CON_DIR_JAVA_ENTITY, GenesisConstants.CON_DIR_JAVA_ROOT);
         String dtoPackage = getPackage(GenesisConstants.CON_DIR_JAVA_DTO, GenesisConstants.CON_DIR_JAVA_ROOT);
-        removePostFixFromDirMap(GenesisConstants.CON_DIR_JAVA_BINDING);
+        removePostFixFromDirMap(GenesisConstants.CON_DIR_JAVA_ENTITY_BINDING);
         for (ClassObject classObject : getClassObjects()) {
             VelocityContext context = new VelocityContext();
             Set<String> imports = new HashSet<>();
@@ -31,7 +31,23 @@ public class JavaFileGenerator extends BaseFileGenerator {
             context.put("imports", imports);
             context.put("classPackage", classPackage);
             context.put("classObject", classObject);
-            generateFile(getGenDirList().get(GenesisConstants.CON_DIR_JAVA_BINDING) + "Bind" + classObject.getName().getParcelCaseName() + ".java", TemplateEnum.JAVA_BINDING.getLocation(), context);
+            generateFile(getGenDirList().get(GenesisConstants.CON_DIR_JAVA_ENTITY_BINDING) + "Bind" + classObject.getName().getParcelCaseName() + ".java", TemplateEnum.JAVA_ENTITY_BINDING.getLocation(), context);
+        }
+    }
+
+    public void generateJavaVoBinding() throws Exception {
+        String classPackage = getPackage(GenesisConstants.CON_DIR_JAVA_VO_BINDING, GenesisConstants.CON_DIR_JAVA_ROOT);
+        String voPackage = getPackage(GenesisConstants.CON_DIR_JAVA_VO, GenesisConstants.CON_DIR_JAVA_ROOT);
+        String dtoPackage = getPackage(GenesisConstants.CON_DIR_JAVA_DTO, GenesisConstants.CON_DIR_JAVA_ROOT);
+        removePostFixFromDirMap(GenesisConstants.CON_DIR_JAVA_VO_BINDING);
+        for (ClassObject classObject : getClassObjects()) {
+            VelocityContext context = new VelocityContext();
+            Set<String> imports = new HashSet<>();
+            imports = Utilz.createImports(imports, voPackage, dtoPackage);
+            context.put("imports", imports);
+            context.put("classPackage", classPackage);
+            context.put("classObject", classObject);
+            generateFile(getGenDirList().get(GenesisConstants.CON_DIR_JAVA_VO_BINDING) + "Bind" + classObject.getName().getParcelCaseName() + ".java", TemplateEnum.JAVA_VO_BINDING.getLocation(), context);
         }
     }
 
@@ -51,6 +67,24 @@ public class JavaFileGenerator extends BaseFileGenerator {
             context.put("classPackage", classPackage);
             generateFile(getGenDirList().get(GenesisConstants.CON_DIR_JAVA_DTO) + classObject.getName().getParcelCaseName() + "Dto.java", TemplateEnum.JAVA_DTO.getLocation(), context);
             generateFile(getGenDirList().get(GenesisConstants.CON_DIR_JAVA_DTO) + classObject.getName().getParcelCaseName() + "ListDto.java", TemplateEnum.JAVA_DTO_LIST.getLocation(), context);
+        }
+    }
+
+    public void generateJavaVos() throws Exception {
+        String classPackage = getPackage(GenesisConstants.CON_DIR_JAVA_VO, GenesisConstants.CON_DIR_JAVA_ROOT);
+        removePostFixFromDirMap(GenesisConstants.CON_DIR_JAVA_VO);
+        for (ClassObject classObject : getClassObjects()) {
+            VelocityContext context = new VelocityContext();
+            Set<String> imports = new HashSet<>();
+            for (VariableObject variableObject : classObject.getVariables()) {
+                if (variableObject.getType().getImportPackage() != null) {
+                    imports.add(variableObject.getType().getImportPackage());
+                }
+            }
+            context.put("imports", imports);
+            context.put("classObject", classObject);
+            context.put("classPackage", classPackage);
+            generateFile(getGenDirList().get(GenesisConstants.CON_DIR_JAVA_VO) + classObject.getName().getParcelCaseName() + "Vo.java", TemplateEnum.JAVA_VO.getLocation(), context);
         }
     }
 
@@ -138,7 +172,7 @@ public class JavaFileGenerator extends BaseFileGenerator {
         String dtoPackage = getPackage(GenesisConstants.CON_DIR_JAVA_DTO, GenesisConstants.CON_DIR_JAVA_ROOT);
         String daoPackage = getPackage(GenesisConstants.CON_DIR_JAVA_DAO, GenesisConstants.CON_DIR_JAVA_ROOT);
         String servicePackage = getPackage(GenesisConstants.CON_DIR_JAVA_SERVICES, GenesisConstants.CON_DIR_JAVA_ROOT);
-        String bindingPackage = getPackage(GenesisConstants.CON_DIR_JAVA_BINDING, GenesisConstants.CON_DIR_JAVA_ROOT);
+        String bindingPackage = getPackage(GenesisConstants.CON_DIR_JAVA_ENTITY_BINDING, GenesisConstants.CON_DIR_JAVA_ROOT);
         String classPackage = getPackage(GenesisConstants.CON_DIR_JAVA_SERVICES_IMPL, GenesisConstants.CON_DIR_JAVA_ROOT);
         removePostFixFromDirMap(GenesisConstants.CON_DIR_JAVA_SERVICES_IMPL);
         for (ClassObject classObject : getClassObjects()) {

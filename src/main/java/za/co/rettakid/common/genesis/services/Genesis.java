@@ -11,8 +11,6 @@ public class Genesis {
 
     private static String schemeFilePath = "src\\main\\resources\\test\\scheme.sql";
     private static String structureFilePath = "src\\main\\resources\\test\\structure.txt";
-    private static String javaPackageDto = "za.co.rettakid";
-    private static String dbName;
 
     public static void main(String[] args) throws Exception {
         StructureGenerator structureGenerator = new StructureGenerator();
@@ -38,10 +36,12 @@ public class Genesis {
         phpFileGenerator.generatePhpXML();
 
         JavaFileGenerator javaFileGenerator = new JavaFileGenerator(schemaDecoder.getClassObjects(),structureGenerator.getGenDirList(),schemaDecoder.getDatabaseName());
-        javaFileGenerator.generateJavaBinding();
+        javaFileGenerator.generateJavaEntityBinding();
+        javaFileGenerator.generateJavaVoBinding();
         javaFileGenerator.generateJavaServiceImpls();
         javaFileGenerator.generateJavaServices();
         javaFileGenerator.generateJavaDtos();
+        javaFileGenerator.generateJavaVos();
         javaFileGenerator.generateJavaDaoImpls();
         javaFileGenerator.generateJavaDaos();
         javaFileGenerator.generateJavaEntities();

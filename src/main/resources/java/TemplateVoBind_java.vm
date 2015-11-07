@@ -1,0 +1,57 @@
+package ${classPackage};
+
+import java.util.ArrayList;
+import java.util.List;
+#foreach(${import} in ${imports})
+${import}
+#end
+
+public class Bind${classObject.name.parcelCaseName} {
+
+    public static ${classObject.name.parcelCaseName}Vo bind${classObject.name.parcelCaseName}(${classObject.name.parcelCaseName}Dto ${classObject.name.camelCaseName}Dto) {
+        ${classObject.name.parcelCaseName}Vo ${classObject.name.camelCaseName}Vo = null;
+        if (${classObject.name.camelCaseName}Dto != null)    {
+            ${classObject.name.camelCaseName}Vo = new ${classObject.name.parcelCaseName}Vo();
+#foreach(${variable} in ${classObject.variables})
+#if (${variable.type.variableTypeEnum} == 'REF')
+            ${classObject.name.camelCaseName}Vo.set${variable.name.parcelCaseName}(Bind${variable.type.javaName}.bind${variable.type.javaName}(${classObject.name.camelCaseName}Dto.get${variable.name.parcelCaseName}()));
+#else
+            ${classObject.name.camelCaseName}Vo.set${variable.name.parcelCaseName}(${classObject.name.camelCaseName}Dto.get${variable.name.parcelCaseName}());
+#end
+#end
+        }
+        return ${classObject.name.camelCaseName}Vo;
+    }
+
+    public static List<${classObject.name.parcelCaseName}Vo> bind${classObject.name.parcelCaseName}DtoList(List<${classObject.name.parcelCaseName}Dto> ${classObject.name.camelCaseName}Dtos) {
+    List<${classObject.name.parcelCaseName}Vo> ${classObject.name.camelCaseName}Entities = new ArrayList<${classObject.name.parcelCaseName}Vo>();
+        for (${classObject.name.parcelCaseName}Dto ${classObject.name.camelCaseName}Dto : ${classObject.name.camelCaseName}Dtos) {
+            ${classObject.name.camelCaseName}Entities.add(bind${classObject.name.parcelCaseName}(${classObject.name.camelCaseName}Dto));
+        }
+        return ${classObject.name.camelCaseName}Entities;
+    }
+
+    public static ${classObject.name.parcelCaseName}Dto bind${classObject.name.parcelCaseName}(${classObject.name.parcelCaseName}Vo ${classObject.name.camelCaseName}Vo) {
+        ${classObject.name.parcelCaseName}Dto ${classObject.name.camelCaseName}Dto = null;
+        if (${classObject.name.camelCaseName}Vo != null)    {
+            ${classObject.name.camelCaseName}Dto = new ${classObject.name.parcelCaseName}Dto();
+#foreach(${variable} in ${classObject.variables})
+#if (${variable.type.variableTypeEnum} == 'REF')
+            ${classObject.name.camelCaseName}Dto.set${variable.name.parcelCaseName}(Bind${variable.type.javaName}.bind${variable.type.javaName}(${classObject.name.camelCaseName}Vo.get${variable.name.parcelCaseName}()));
+#else
+            ${classObject.name.camelCaseName}Dto.set${variable.name.parcelCaseName}(${classObject.name.camelCaseName}Vo.get${variable.name.parcelCaseName}());
+#end
+#end
+        }
+        return ${classObject.name.camelCaseName}Dto;
+    }
+
+    public static List<${classObject.name.parcelCaseName}Dto> bind${classObject.name.parcelCaseName}VoList(List<${classObject.name.parcelCaseName}Vo> ${classObject.name.camelCaseName}Vos) {
+        List<${classObject.name.parcelCaseName}Dto> ${classObject.name.camelCaseName}Dtos = new ArrayList<${classObject.name.parcelCaseName}Dto>();
+        for (${classObject.name.parcelCaseName}Vo ${classObject.name.camelCaseName}Vo : ${classObject.name.camelCaseName}Vos) {
+            ${classObject.name.camelCaseName}Dtos.add(bind${classObject.name.parcelCaseName}(${classObject.name.camelCaseName}Vo));
+        }
+        return ${classObject.name.camelCaseName}Dtos;
+    }
+
+}

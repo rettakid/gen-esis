@@ -19,7 +19,9 @@ public enum TemplateEnum {
     JAVA_DAO_IMPL("java\\TemplateDaoImpl_java.vm"),
     JAVA_SERVICE("java\\TemplateService_java.vm"),
     JAVA_SERVICE_IMPL("java\\TemplateServiceImpl_java.vm"),
-    JAVA_BINDING("java\\TemplateBind_java.vm"),
+    JAVA_ENTITY_BINDING("java\\TemplateEntityBind_java.vm"),
+    JAVA_VO("java\\TemplateVo_java.vm"),
+    JAVA_VO_BINDING("java\\TemplateVoBind_java.vm"),
 
     PHP_BINDING("php\\TemplateBinding_php.vm"),
     PHP_CONFIG("php\\config_php.vm"),

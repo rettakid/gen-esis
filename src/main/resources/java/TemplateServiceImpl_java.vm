@@ -18,22 +18,15 @@ public class ${classObject.name.parcelCaseName}ServiceImpl implements ${classObj
         ${classObject.name.camelCaseName}ListDto.add${classObject.name.parcelCaseName}List(Bind${classObject.name.parcelCaseName}.bind${classObject.name.parcelCaseName}EntityList(${classObject.name.camelCaseName}Dao.read()));
         return ${classObject.name.camelCaseName}ListDto;
     }
-    
+
     @Override
     public ${classObject.name.parcelCaseName}Dto get${classObject.name.parcelCaseName}s(${classObject.primaryKeyVar.type.javaName} ${classObject.primaryKeyVar.name.camelCaseName})  {
         return Bind${classObject.name.parcelCaseName}.bind${classObject.name.parcelCaseName}(${classObject.name.camelCaseName}Dao.read(${classObject.primaryKeyVar.name.camelCaseName}));
     }
     
     @Override
-        public void post${classObject.name.parcelCaseName}s(${classObject.name.parcelCaseName}Dto ${classObject.name.camelCaseName}Dto)  {
+    public void post${classObject.name.parcelCaseName}s(${classObject.name.parcelCaseName}Dto ${classObject.name.camelCaseName}Dto)  {
         ${classObject.name.camelCaseName}Dao.createOrUpdate(Bind${classObject.name.parcelCaseName}.bind${classObject.name.parcelCaseName}(${classObject.name.camelCaseName}Dto));
-    }
-
-    @Override
-    public void post${classObject.name.parcelCaseName}s(${classObject.name.parcelCaseName}ListDto ${classObject.name.camelCaseName}ListDto)  {
-        for (${classObject.name.parcelCaseName}Dto ${classObject.name.camelCaseName}Dto : ${classObject.name.camelCaseName}ListDto.get${classObject.name.parcelCaseName}List()) {
-            ${classObject.name.camelCaseName}Dao.createOrUpdate(Bind${classObject.name.parcelCaseName}.bind${classObject.name.parcelCaseName}(${classObject.name.camelCaseName}Dto));
-        }
     }
 
     @Override

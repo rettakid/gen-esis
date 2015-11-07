@@ -23,8 +23,10 @@ public class GenesisConstants {
     public static final String CON_DIR_JAVA_ENTITY = "java_entity";
     public static final String CON_DIR_JAVA_DAO = "java_dao";
     public static final String CON_DIR_JAVA_DAO_IMPL = "java_dao_impl";
-    public static final String CON_DIR_JAVA_BINDING = "java_binding";
     public static final String CON_DIR_JAVA_SERVICES = "java_service";
     public static final String CON_DIR_JAVA_SERVICES_IMPL = "java_service_impl";
+    public static final String CON_DIR_JAVA_ENTITY_BINDING = "java_entity_binding";
+    public static final String CON_DIR_JAVA_VO = "java_vo";
+    public static final String CON_DIR_JAVA_VO_BINDING = "java_vo_binding";
 
 }

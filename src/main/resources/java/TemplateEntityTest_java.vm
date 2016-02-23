@@ -1,0 +1,66 @@
+package ${classPackage};
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.ArrayList;
+import java.util.Date;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"/persistence-context-test.xml"})
+@Transactional
+public class ${classObject.name.parcelCaseName}EntityTest {
+
+    private ${classObject.name.parcelCaseName}Entity ${classObject.name.camelCaseName}Entity = new ${classObject.name.parcelCaseName}Entity();
+
+#foreach(${variable} in ${classObject.variables})
+#if(${variable.type.variableTypeEnum} == 'REF')
+    #set($cast = '')
+#else
+    #set($cast = '(' + ${variable.type.variableTypeEnum.javaName} + ')')
+#end
+
+    @Test
+    public void testGet${variable.name.parcelCaseName}() throws Exception {
+#if(${variable.type.variableTypeEnum} == 'REF')
+        ${variable.type.javaName}Entity expected = new ${variable.type.javaName}Entity();
+#else
+        ${variable.type.variableTypeEnum.javaName} expected = ${variable.type.variableTypeEnum.javaTestValue};
+#end
+        ${classObject.name.camelCaseName}Entity.set${variable.name.parcelCaseName}(expected);
+        Assert.assertEquals(expected,${classObject.name.camelCaseName}Entity.get${variable.name.parcelCaseName}());
+    }
+
+    @Test
+    public void testSet${variable.name.parcelCaseName}() throws Exception {
+#if(${variable.type.variableTypeEnum} == 'REF')
+        ${variable.type.javaName}Entity expected = new ${variable.type.javaName}Entity();
+#else
+        ${variable.type.variableTypeEnum.javaName} expected = ${variable.type.variableTypeEnum.javaTestValue};
+#end
+        ${classObject.name.camelCaseName}Entity.set${variable.name.parcelCaseName}(expected);
+        Assert.assertEquals(expected,${classObject.name.camelCaseName}Entity.get${variable.name.parcelCaseName}());
+    }
+
+#end
+
+#foreach(${reference} in ${classObject.references})
+
+    @Test
+    public void testGet${reference.name.parcelCaseName}${reference.refName.parcelCaseName}s() throws Exception {
+        ${classObject.name.camelCaseName}Entity.set${reference.name.parcelCaseName}${reference.refName.parcelCaseName}s(new ArrayList());
+        Assert.assertEquals(new ArrayList(),${classObject.name.camelCaseName}Entity.get${reference.name.parcelCaseName}${reference.refName.parcelCaseName}s());
+    }
+
+    @Test
+    public void testSet${reference.name.parcelCaseName}${reference.refName.parcelCaseName}s() throws Exception {
+        ${classObject.name.camelCaseName}Entity.set${reference.name.parcelCaseName}${reference.refName.parcelCaseName}s(new ArrayList());
+        Assert.assertEquals(new ArrayList(),${classObject.name.camelCaseName}Entity.get${reference.name.parcelCaseName}${reference.refName.parcelCaseName}s());
+    }
+
+#end
+
+}

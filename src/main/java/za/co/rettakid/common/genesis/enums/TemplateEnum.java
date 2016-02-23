@@ -5,6 +5,8 @@ package za.co.rettakid.common.genesis.enums;
  */
 public enum TemplateEnum {
 
+    SQL_FILE("sql\\schema_sql.vm"),
+
     ANDROID_BASE_CLIENT("android\\BaseClient_java.vm"),
     ANDROID_CLIENT("android\\TemplateClient_java.vm"),
     ANDROID_DTO("android\\TemplateDto_java.vm"),
@@ -19,7 +21,13 @@ public enum TemplateEnum {
     JAVA_DAO_IMPL("java\\TemplateDaoImpl_java.vm"),
     JAVA_SERVICE("java\\TemplateService_java.vm"),
     JAVA_SERVICE_IMPL("java\\TemplateServiceImpl_java.vm"),
+    JAVA_REST("java\\TemplateRest_java.vm"),
     JAVA_ENTITY_BINDING("java\\TemplateEntityBind_java.vm"),
+    JAVA_VO("java\\TemplateVo_java.vm"),
+    JAVA_VO_BINDING("java\\TemplateVoBind_java.vm"),
+
+    JAVA_ENTITY_TEST("java\\TemplateEntityTest_java.vm"),
+    JAVA_DAO_TEST("java\\TemplateDaoTest_java.vm"),
 
     PHP_BINDING("php\\TemplateBinding_php.vm"),
     PHP_CONFIG("php\\config_php.vm"),

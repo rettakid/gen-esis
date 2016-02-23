@@ -1,0 +1,41 @@
+package ${classPackage};
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+#foreach(${import} in ${imports})
+${import}
+#end
+
+@RestController
+@RequestMapping("/${classObject.name.camelCaseName}s")
+public class ${classObject.name.parcelCaseName}RestController {
+
+    @Autowired
+    private ${classObject.name.parcelCaseName}Service ${classObject.name.camelCaseName}Service;
+    
+    @RequestMapping(method = RequestMethod.GET)
+    public ${classObject.name.parcelCaseName}ListDto get${classObject.name.parcelCaseName}s()   {
+        return ${classObject.name.camelCaseName}Service.get${classObject.name.parcelCaseName}s();
+    }
+    
+    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    public ${classObject.name.parcelCaseName}Dto get${classObject.name.parcelCaseName}s(@PathVariable("id") Long id)   {
+        return ${classObject.name.camelCaseName}Service.get${classObject.name.parcelCaseName}s(id);
+    }
+    
+    @RequestMapping(method = RequestMethod.POST)
+    public ${classObject.name.parcelCaseName}Dto post${classObject.name.parcelCaseName}s(@RequestBody ${classObject.name.parcelCaseName}Dto ${classObject.name.camelCaseName}Dto)   {
+        return ${classObject.name.camelCaseName}Service.post${classObject.name.parcelCaseName}s(${classObject.name.camelCaseName}Dto);
+    }
+    
+    @RequestMapping(value = "/{id}",method = RequestMethod.PUT)
+    public void put${classObject.name.parcelCaseName}s(@PathVariable("id") Long id,@RequestBody ${classObject.name.parcelCaseName}Dto ${classObject.name.camelCaseName}Dto)   {
+        ${classObject.name.camelCaseName}Service.put${classObject.name.parcelCaseName}s(${classObject.name.camelCaseName}Dto);
+    }
+    
+    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
+    public void delete${classObject.name.parcelCaseName}s(@PathVariable("id") Long id)   {
+        ${classObject.name.camelCaseName}Service.delete${classObject.name.parcelCaseName}s(id);
+    }
+
+}

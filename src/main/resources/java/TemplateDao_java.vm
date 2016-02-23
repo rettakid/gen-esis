@@ -1,5 +1,6 @@
 package ${classPackage};
 
+import java.util.List;
 #foreach(${import} in ${imports})
 ${import}
 #end

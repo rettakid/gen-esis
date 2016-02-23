@@ -1,0 +1,41 @@
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+02:00";
+
+USE ${databaseName.originalName};
+
+#foreach(${table} in ${tables})
+CREATE TABLE ${databaseName.originalName}_${table.name.originalName}_AUD (
+    ${table.name.originalName}_AUD_ID BIGINT(15) NOT NULL AUTO_INCREMENT,
+#foreach(${variable} in ${table.variables})
+#if(${variable.nullity} == 'NULL')
+    #set($nullity = 'NULL')
+#else
+    #set($nullity = 'NOT NULL')
+#end
+#if(${variable.length} == 0)
+    #set($length = '')
+#else
+    #set($length = '(' + ${variable.length} + ')')
+#end
+#if(${variable.type.variableTypeEnum} == 'REF')
+    #set($type = 'BIGINT')
+#else
+    #set($type = ${variable.type.variableTypeEnum})
+#end
+    ${variable.orgName.originalName} ${type}${length} ${nullity},
+#end
+    REV INT NOT NULL,
+    REVTYPE TINYINT NOT NULL,
+
+    PRIMARY KEY (${table.name.originalName}_AUD_ID)
+);
+
+#end
+CREATE TABLE REVINFO (
+    REV INT NOT NULL AUTO_INCREMENT,
+    REVTSTMP BIGINT NOT NULL,
+    USER_ID BIGINT NOT NULL,
+    DATE_CHANGED DATETIME NOT NULL,
+
+    PRIMARY KEY (REV)
+)

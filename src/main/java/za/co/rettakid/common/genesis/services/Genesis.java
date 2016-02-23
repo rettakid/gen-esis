@@ -3,6 +3,7 @@ package za.co.rettakid.common.genesis.services;
 import za.co.rettakid.common.genesis.services.generetor.AndroidFileGenerator;
 import za.co.rettakid.common.genesis.services.generetor.JavaFileGenerator;
 import za.co.rettakid.common.genesis.services.generetor.PhpFileGenerator;
+import za.co.rettakid.common.genesis.services.generetor.SqlFileGenerator;
 
 /**
  * Created by lwazi8 on 26/08/2015.
@@ -15,6 +16,9 @@ public class Genesis {
 
         SchemaDecoder schemaDecoder = new SchemaDecoder();
         schemaDecoder.decodeScheme(args[0]);
+
+        SqlFileGenerator sqlFileGenerator = new SqlFileGenerator(schemaDecoder.getClassObjects(),structureGenerator.getGenDirList(),schemaDecoder.getDatabaseName());
+        sqlFileGenerator.generateSchema();
 
         AndroidFileGenerator androidFileGenerator = new AndroidFileGenerator(schemaDecoder.getClassObjects(),structureGenerator.getGenDirList(),schemaDecoder.getDatabaseName());
         androidFileGenerator.generateAndroidBaseClient();
@@ -33,13 +37,18 @@ public class Genesis {
         phpFileGenerator.generatePhpXML();
 
         JavaFileGenerator javaFileGenerator = new JavaFileGenerator(schemaDecoder.getClassObjects(),structureGenerator.getGenDirList(),schemaDecoder.getDatabaseName());
-        javaFileGenerator.generateJavaBinding();
+        javaFileGenerator.generateJavaEntityBinding();
+        javaFileGenerator.generateJavaVoBinding();
+        javaFileGenerator.generateJavaRest();
         javaFileGenerator.generateJavaServiceImpls();
         javaFileGenerator.generateJavaServices();
         javaFileGenerator.generateJavaDtos();
+        javaFileGenerator.generateJavaVos();
         javaFileGenerator.generateJavaDaoImpls();
         javaFileGenerator.generateJavaDaos();
+        javaFileGenerator.generateJavaDaoTests();
         javaFileGenerator.generateJavaEntities();
+        javaFileGenerator.generateJavaEntitiesTests();
 
     }
 

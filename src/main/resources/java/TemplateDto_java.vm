@@ -16,6 +16,9 @@ public class ${classObject.name.parcelCaseName}Dto    {
     private ${variable.type.javaName} ${variable.name.camelCaseName};
 #end
 #end
+#foreach(${reference} in ${classObject.references})
+    private ${reference.name.parcelCaseName}ListDto ${reference.name.camelCaseName}${reference.refName.parcelCaseName}s;
+#end
 #foreach(${variable} in ${classObject.variables})
 #if(${variable.isPk} == true || ${variable.nullity} == 'NULL')
     #set($required = ' , required = false')
@@ -37,6 +40,17 @@ public class ${classObject.name.parcelCaseName}Dto    {
     @XmlElement(${name}${required})
     public void set${variable.name.parcelCaseName}(${type} ${variable.name.camelCaseName})   {
         this.${variable.name.camelCaseName} = ${variable.name.camelCaseName};
+    }
+#end
+
+#foreach(${reference} in ${classObject.references})
+
+    public ${reference.name.parcelCaseName}ListDto get${reference.name.parcelCaseName}${reference.refName.parcelCaseName}s()   {
+        return this.${reference.name.camelCaseName}${reference.refName.parcelCaseName}s;
+    }
+
+    public void set${reference.name.parcelCaseName}${reference.refName.parcelCaseName}s(${reference.name.parcelCaseName}ListDto ${reference.name.camelCaseName}${reference.refName.parcelCaseName}s)   {
+        this.${reference.name.camelCaseName}${reference.refName.parcelCaseName}s = ${reference.name.camelCaseName}${reference.refName.parcelCaseName}s;
     }
 #end
 

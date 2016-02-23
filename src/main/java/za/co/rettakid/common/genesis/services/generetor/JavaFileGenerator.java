@@ -8,7 +8,10 @@ import za.co.rettakid.common.genesis.pojo.ClassObject;
 import za.co.rettakid.common.genesis.pojo.GeneratedName;
 import za.co.rettakid.common.genesis.pojo.VariableObject;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Lwazi Prusent on 2015/09/24.
@@ -19,7 +22,7 @@ public class JavaFileGenerator extends BaseFileGenerator {
         super(classObjects, genDirList, databaseName);
     }
 
-    public void generateJavaBinding() throws Exception {
+    public void generateJavaEntityBinding() throws Exception {
         String classPackage = getPackage(GenesisConstants.CON_DIR_JAVA_ENTITY_BINDING, GenesisConstants.CON_DIR_JAVA_ROOT);
         String entityPackage = getPackage(GenesisConstants.CON_DIR_JAVA_ENTITY, GenesisConstants.CON_DIR_JAVA_ROOT);
         String dtoPackage = getPackage(GenesisConstants.CON_DIR_JAVA_DTO, GenesisConstants.CON_DIR_JAVA_ROOT);
@@ -32,6 +35,23 @@ public class JavaFileGenerator extends BaseFileGenerator {
             context.put("classPackage", classPackage);
             context.put("classObject", classObject);
             generateFile(getGenDirList().get(GenesisConstants.CON_DIR_JAVA_ENTITY_BINDING) + "Bind" + classObject.getName().getParcelCaseName() + ".java", TemplateEnum.JAVA_ENTITY_BINDING.getLocation(), context);
+
+        }
+    }
+
+    public void generateJavaVoBinding() throws Exception {
+        String classPackage = getPackage(GenesisConstants.CON_DIR_JAVA_VO_BINDING, GenesisConstants.CON_DIR_JAVA_ROOT);
+        String voPackage = getPackage(GenesisConstants.CON_DIR_JAVA_VO, GenesisConstants.CON_DIR_JAVA_ROOT);
+        String dtoPackage = getPackage(GenesisConstants.CON_DIR_JAVA_DTO, GenesisConstants.CON_DIR_JAVA_ROOT);
+        removePostFixFromDirMap(GenesisConstants.CON_DIR_JAVA_VO_BINDING);
+        for (ClassObject classObject : getClassObjects()) {
+            VelocityContext context = new VelocityContext();
+            Set<String> imports = new HashSet<>();
+            imports = Utilz.createImports(imports, voPackage, dtoPackage);
+            context.put("imports", imports);
+            context.put("classPackage", classPackage);
+            context.put("classObject", classObject);
+            generateFile(getGenDirList().get(GenesisConstants.CON_DIR_JAVA_VO_BINDING) + "Bind" + classObject.getName().getParcelCaseName() + ".java", TemplateEnum.JAVA_VO_BINDING.getLocation(), context);
         }
     }
 
@@ -54,6 +74,24 @@ public class JavaFileGenerator extends BaseFileGenerator {
         }
     }
 
+    public void generateJavaVos() throws Exception {
+        String classPackage = getPackage(GenesisConstants.CON_DIR_JAVA_VO, GenesisConstants.CON_DIR_JAVA_ROOT);
+        removePostFixFromDirMap(GenesisConstants.CON_DIR_JAVA_VO);
+        for (ClassObject classObject : getClassObjects()) {
+            VelocityContext context = new VelocityContext();
+            Set<String> imports = new HashSet<>();
+            for (VariableObject variableObject : classObject.getVariables()) {
+                if (variableObject.getType().getImportPackage() != null) {
+                    imports.add(variableObject.getType().getImportPackage());
+                }
+            }
+            context.put("imports", imports);
+            context.put("classObject", classObject);
+            context.put("classPackage", classPackage);
+            generateFile(getGenDirList().get(GenesisConstants.CON_DIR_JAVA_VO) + classObject.getName().getParcelCaseName() + "Vo.java", TemplateEnum.JAVA_VO.getLocation(), context);
+        }
+    }
+
     public void generateJavaEntities() throws Exception {
         String classPackage = getPackage(GenesisConstants.CON_DIR_JAVA_ENTITY, GenesisConstants.CON_DIR_JAVA_ROOT);
         removePostFixFromDirMap(GenesisConstants.CON_DIR_JAVA_ENTITY);
@@ -70,6 +108,17 @@ public class JavaFileGenerator extends BaseFileGenerator {
             context.put("classObject", classObject);
             context.put("classPackage", classPackage);
             generateFile(getGenDirList().get(GenesisConstants.CON_DIR_JAVA_ENTITY) + classObject.getName().getParcelCaseName() + "Entity.java", TemplateEnum.JAVA_ENTITY.getLocation(), context);
+        }
+    }
+
+    public void generateJavaEntitiesTests() throws Exception {
+        String classPackage = getPackage(GenesisConstants.CON_DIR_JAVA_ENTITY_TEST, GenesisConstants.CON_DIR_JAVA_ROOT_TEST);
+        removePostFixFromDirMap(GenesisConstants.CON_DIR_JAVA_ENTITY_TEST);
+        for (ClassObject classObject : getClassObjects()) {
+            VelocityContext context = new VelocityContext();
+            context.put("classObject", classObject);
+            context.put("classPackage", classPackage);
+            generateFile(getGenDirList().get(GenesisConstants.CON_DIR_JAVA_ENTITY_TEST) + classObject.getName().getParcelCaseName() + "EntityTest.java", TemplateEnum.JAVA_ENTITY_TEST.getLocation(), context);
         }
     }
 
@@ -90,6 +139,17 @@ public class JavaFileGenerator extends BaseFileGenerator {
             context.put("classObject", classObject);
             context.put("classPackage", classPackage);
             generateFile(getGenDirList().get(GenesisConstants.CON_DIR_JAVA_DAO) + classObject.getName().getParcelCaseName() + "Dao.java", TemplateEnum.JAVA_DAO.getLocation(), context);
+        }
+    }
+
+    public void generateJavaDaoTests() throws Exception {
+        String classPackage = getPackage(GenesisConstants.CON_DIR_JAVA_DAO_TEST, GenesisConstants.CON_DIR_JAVA_ROOT_TEST);
+        removePostFixFromDirMap(GenesisConstants.CON_DIR_JAVA_DAO_TEST);
+        for (ClassObject classObject : getClassObjects()) {
+            VelocityContext context = new VelocityContext();
+            context.put("classObject", classObject);
+            context.put("classPackage", classPackage);
+            generateFile(getGenDirList().get(GenesisConstants.CON_DIR_JAVA_DAO_TEST) + classObject.getName().getParcelCaseName() + "DaoTest.java", TemplateEnum.JAVA_DAO_TEST.getLocation(), context);
         }
     }
 
@@ -136,6 +196,7 @@ public class JavaFileGenerator extends BaseFileGenerator {
 
     public void generateJavaServiceImpls() throws Exception {
         String dtoPackage = getPackage(GenesisConstants.CON_DIR_JAVA_DTO, GenesisConstants.CON_DIR_JAVA_ROOT);
+        String entityPackage = getPackage(GenesisConstants.CON_DIR_JAVA_ENTITY, GenesisConstants.CON_DIR_JAVA_ROOT);
         String daoPackage = getPackage(GenesisConstants.CON_DIR_JAVA_DAO, GenesisConstants.CON_DIR_JAVA_ROOT);
         String servicePackage = getPackage(GenesisConstants.CON_DIR_JAVA_SERVICES, GenesisConstants.CON_DIR_JAVA_ROOT);
         String bindingPackage = getPackage(GenesisConstants.CON_DIR_JAVA_ENTITY_BINDING, GenesisConstants.CON_DIR_JAVA_ROOT);
@@ -149,7 +210,7 @@ public class JavaFileGenerator extends BaseFileGenerator {
                     imports.add(variableObject.getType().getImportPackage());
                 }
             }
-            imports = Utilz.createImports(imports, dtoPackage, servicePackage, daoPackage, bindingPackage);
+            imports = Utilz.createImports(imports, dtoPackage, servicePackage, daoPackage, entityPackage, bindingPackage);
             context.put("classPackage", classPackage);
             context.put("imports", imports);
             context.put("classObject", classObject);
@@ -157,5 +218,25 @@ public class JavaFileGenerator extends BaseFileGenerator {
         }
     }
 
+    public void generateJavaRest() throws Exception {
+        String dtoPackage = getPackage(GenesisConstants.CON_DIR_JAVA_DTO, GenesisConstants.CON_DIR_JAVA_ROOT);
+        String servicePackage = getPackage(GenesisConstants.CON_DIR_JAVA_SERVICES, GenesisConstants.CON_DIR_JAVA_ROOT);
+        String classPackage = getPackage(GenesisConstants.CON_DIR_JAVA_REST, GenesisConstants.CON_DIR_JAVA_ROOT);
+        removePostFixFromDirMap(GenesisConstants.CON_DIR_JAVA_REST);
+        for (ClassObject classObject : getClassObjects()) {
+            VelocityContext context = new VelocityContext();
+            Set<String> imports = new HashSet<>();
+            for (VariableObject variableObject : classObject.getVariables()) {
+                if (variableObject.getType().getImportPackage() != null) {
+                    imports.add(variableObject.getType().getImportPackage());
+                }
+            }
+            imports = Utilz.createImports(imports, dtoPackage,servicePackage);
+            context.put("imports", imports);
+            context.put("classPackage", classPackage);
+            context.put("classObject", classObject);
+            generateFile(getGenDirList().get(GenesisConstants.CON_DIR_JAVA_REST) + classObject.getName().getParcelCaseName() + "RestController.java", TemplateEnum.JAVA_REST.getLocation(), context);
+        }
+    }
 
 }

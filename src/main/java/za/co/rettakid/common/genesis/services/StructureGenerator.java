@@ -27,6 +27,9 @@ public class StructureGenerator {
     Map<String,String> genDirList = new HashMap<>();
 
     public StructureGenerator() {
+        genDirList.put(GenesisConstants.CON_DIR_SQL_ROOT,null);
+        genDirList.put(GenesisConstants.CON_DIR_SQL_SCHEME_FILE,null);
+
         genDirList.put(GenesisConstants.CON_DIR_PHP_ROOT,null);
         genDirList.put(GenesisConstants.CON_DIR_PHP_BINDINGS, null);
         genDirList.put(GenesisConstants.CON_DIR_PHP_COMMON, null);
@@ -48,6 +51,13 @@ public class StructureGenerator {
         genDirList.put(GenesisConstants.CON_DIR_JAVA_ENTITY_BINDING, null);
         genDirList.put(GenesisConstants.CON_DIR_JAVA_SERVICES, null);
         genDirList.put(GenesisConstants.CON_DIR_JAVA_SERVICES_IMPL, null);
+        genDirList.put(GenesisConstants.CON_DIR_JAVA_REST, null);
+        genDirList.put(GenesisConstants.CON_DIR_JAVA_VO, null);
+        genDirList.put(GenesisConstants.CON_DIR_JAVA_VO_BINDING, null);
+
+        genDirList.put(GenesisConstants.CON_DIR_JAVA_ROOT_TEST, null);
+        genDirList.put(GenesisConstants.CON_DIR_JAVA_ENTITY_TEST, null);
+        genDirList.put(GenesisConstants.CON_DIR_JAVA_DAO_TEST, null);
     }
 
     public void generatorStructure(String schemeLocation) {

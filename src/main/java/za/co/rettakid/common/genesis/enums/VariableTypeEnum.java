@@ -5,25 +5,27 @@ package za.co.rettakid.common.genesis.enums;
  */
 public enum VariableTypeEnum {
 
-    INT("integer","Integer",null),
-    BIGINT("bigint","Long",null),
-    VARCHAR("string","String",null),
-    BOOLEAN("boolean","Boolean",null),
-    FLOAT("float","Float",null),
-    DATE("date","Date","import java.util.Date;"),
-    TIME("time","Date","import java.util.Date;"),
-    DATETIME("datetime","Date","import java.util.Date;"),
-    BLOB("string","String",null),
-    REF("string","EMPTY",null);
+    INT("integer","Integer",null,"256"),
+    BIGINT("bigint","Long",null,"512L"),
+    VARCHAR("string","String",null,"\"One Thousand\""),
+    BOOLEAN("boolean","Boolean",null,"false"),
+    FLOAT("float","Float",null,"2048f"),
+    DATE("date","Date","import java.util.Date;","new Date()"),
+    TIME("time","Date","import java.util.Date;","new Date()"),
+    DATETIME("datetime","Date","import java.util.Date;","new Date()"),
+    BLOB("string","String",null,"\"this should be a long string\""),
+    REF("string","EMPTY",null,"null");
 
     private String phpName;
     private String javaName;
     private String javaImport;
+    private String javaTestValue;
 
-    private VariableTypeEnum(String phpName,String javaName,String javaImport) {
+    private VariableTypeEnum(String phpName,String javaName,String javaImport,String javaTestValue) {
         this.phpName = phpName;
         this.javaName = javaName;
         this.javaImport = javaImport;
+        this.javaTestValue = javaTestValue;
     }
 
     public String getPhpName() {
@@ -36,6 +38,10 @@ public enum VariableTypeEnum {
 
     public String getJavaImport()   {
         return javaImport;
+    }
+
+    public String getJavaTestValue() {
+        return javaTestValue;
     }
 
     public static VariableTypeEnum setEnum(String value) {

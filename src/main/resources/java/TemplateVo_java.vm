@@ -1,0 +1,45 @@
+package ${classPackage};
+
+import org.hibernate.validator.constraints.*;
+import javax.validation.constraints.*;
+import javax.validation.Valid;
+#foreach(${import} in ${imports})
+${import}
+#end
+
+public class ${classObject.name.parcelCaseName}Vo    {
+
+#foreach(${variable} in ${classObject.variables})
+#if(${variable.nullity} == 'NOT_NULL' && ${variable.type.javaName} == 'String' && ${variable.isPk} == false)
+    #set($empty = '@NotBlank @NotNull
+    ')
+#elseif(${variable.nullity} == 'NOT_NULL' && ${variable.isPk} == false)
+        #set($empty = '@NotNull
+    ')
+#else
+    #set($empty = '')
+#end
+#if(${variable.type.variableTypeEnum} == 'REF')
+    @Valid
+    ${empty}private ${variable.type.javaName}Vo ${variable.name.camelCaseName};
+#else
+    ${empty}private ${variable.type.javaName} ${variable.name.camelCaseName};
+#end
+#end
+#foreach(${variable} in ${classObject.variables})
+#if(${variable.type.variableTypeEnum} == 'REF')
+    #set($type = ${variable.type.javaName} + 'Vo')
+#else
+    #set($type = ${variable.type.javaName})
+#end
+
+    public ${type} get${variable.name.parcelCaseName}()   {
+        return this.${variable.name.camelCaseName};
+    }
+
+    public void set${variable.name.parcelCaseName}(${type} ${variable.name.camelCaseName})   {
+        this.${variable.name.camelCaseName} = ${variable.name.camelCaseName};
+    }
+#end
+
+}
